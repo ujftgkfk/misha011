@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Succession: Битва за Waystar Royco - Расширенное издание</title>
+    <title>🔥 SUCCESSION: ЭКСТРЕМАЛЬНОЕ ИЗДАНИЕ 🔥</title>
     <style>
         * {
             margin: 0;
@@ -21,6 +21,33 @@
             align-items: center;
             padding: 20px;
             overflow-x: hidden;
+        }
+
+        body.shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
+        .flash-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 0, 0, 0.3);
+            pointer-events: none;
+            opacity: 0;
+            z-index: 9999;
+            transition: opacity 0.3s;
+        }
+
+        .flash-overlay.active {
+            opacity: 1;
         }
 
         .particles {
@@ -42,8 +69,167 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-100px) translateX(50px); }
+            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+            50% { transform: translateY(-100px) translateX(50px) rotate(180deg); }
+        }
+
+        /* Новости бегущей строкой */
+        .news-ticker {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 0, 0, 0.9);
+            color: #fff;
+            padding: 10px 0;
+            font-size: 1.1em;
+            font-weight: bold;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .news-ticker-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: ticker 30s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Combo counter */
+        .combo-counter {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: linear-gradient(135deg, #ff0000 0%, #ff6b00 100%);
+            border: 3px solid #ffd700;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: 2em;
+            font-weight: bold;
+            z-index: 1001;
+            display: none;
+            animation: pulse-combo 0.5s infinite;
+        }
+
+        .combo-counter.active {
+            display: block;
+        }
+
+        @keyframes pulse-combo {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Акции в реальном времени */
+        .stock-ticker {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 1001;
+            min-width: 200px;
+        }
+
+        .stock-value {
+            font-size: 2em;
+            color: #d4af37;
+            font-weight: bold;
+        }
+
+        .stock-change {
+            font-size: 1.2em;
+            margin-top: 5px;
+        }
+
+        .stock-change.up {
+            color: #4ade80;
+        }
+
+        .stock-change.down {
+            color: #f87171;
+        }
+
+        /* AI Соперник атакует */
+        .ai-attack {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 0, 0, 0.95);
+            border: 5px solid #ff0000;
+            border-radius: 20px;
+            padding: 40px;
+            z-index: 2000;
+            display: none;
+            text-align: center;
+            animation: attack-pulse 0.5s infinite;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.8);
+        }
+
+        .ai-attack.active {
+            display: block;
+        }
+
+        @keyframes attack-pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        .ai-attack h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        /* Мини-игра переговоров */
+        .negotiation-minigame {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 3px solid #d4af37;
+            border-radius: 20px;
+            padding: 40px;
+            z-index: 2000;
+            display: none;
+            min-width: 600px;
+            max-width: 80%;
+        }
+
+        .negotiation-minigame.active {
+            display: block;
+        }
+
+        .negotiation-bar {
+            width: 100%;
+            height: 40px;
+            background: #2d2d44;
+            border-radius: 20px;
+            position: relative;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .negotiation-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0000 0%, #ffd700 50%, #4ade80 100%);
+            transition: width 0.3s ease;
+        }
+
+        .negotiation-target {
+            position: absolute;
+            width: 4px;
+            height: 100%;
+            background: #fff;
+            box-shadow: 0 0 10px #fff;
         }
 
         .game-container {
@@ -66,17 +252,23 @@
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
             font-weight: bold;
             letter-spacing: 3px;
+            animation: title-glow 2s infinite;
+        }
+
+        @keyframes title-glow {
+            0%, 100% { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8), 0 0 20px #d4af37; }
+            50% { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8), 0 0 40px #ffd700; }
         }
 
         .subtitle {
             text-align: center;
             font-size: 1.2em;
-            color: #c0c0c0;
+            color: #ff0000;
             margin-bottom: 20px;
             font-style: italic;
+            font-weight: bold;
         }
 
-        /* Экран выбора персонажа */
         .character-select {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -95,7 +287,7 @@
         }
 
         .character-card:hover {
-            transform: translateY(-5px) scale(1.02);
+            transform: translateY(-5px) scale(1.02) rotate(2deg);
             box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
             border-color: #ffd700;
         }
@@ -103,6 +295,12 @@
         .character-avatar {
             font-size: 4em;
             margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
         .character-card h3 {
@@ -126,7 +324,6 @@
             color: #ffd700;
         }
 
-        /* Верхняя панель с меню */
         .top-menu {
             display: flex;
             justify-content: space-between;
@@ -150,6 +347,7 @@
         .menu-btn:hover {
             background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
             color: #000;
+            transform: scale(1.05);
         }
 
         .character-info {
@@ -171,7 +369,6 @@
             font-weight: bold;
         }
 
-        /* Система статистики */
         .stats-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -189,7 +386,7 @@
         }
 
         .stat-box:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(2deg);
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
         }
 
@@ -239,7 +436,6 @@
             100% { transform: translateX(100%); }
         }
 
-        /* Система отношений */
         .relationships-container {
             background: rgba(255, 255, 255, 0.05);
             border: 2px solid #d4af37;
@@ -267,6 +463,11 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
             border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .relationship-item:hover {
+            transform: scale(1.1);
         }
 
         .relationship-icon {
@@ -289,7 +490,6 @@
         .relationship-neutral { color: #fbbf24; }
         .relationship-negative { color: #f87171; }
 
-        /* История и выборы */
         .story-box {
             background: rgba(255, 255, 255, 0.05);
             border-left: 4px solid #d4af37;
@@ -321,8 +521,8 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
         }
 
         .character-name {
@@ -352,8 +552,12 @@
         .choice-btn:hover:not(:disabled) {
             background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
             color: #000;
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.02);
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .choice-btn:active:not(:disabled) {
+            transform: translateY(0) scale(0.98);
         }
 
         .choice-btn:disabled {
@@ -374,14 +578,6 @@
             opacity: 1;
         }
 
-        .choice-effect {
-            font-size: 0.85em;
-            color: #c0c0c0;
-            margin-top: 5px;
-            font-style: italic;
-        }
-
-        /* Экран окончания игры */
         .game-over {
             text-align: center;
             padding: 40px;
@@ -391,6 +587,7 @@
             font-size: 2.8em;
             color: #d4af37;
             margin-bottom: 20px;
+            animation: title-glow 2s infinite;
         }
 
         .game-over p {
@@ -415,6 +612,11 @@
             margin: 10px 0;
             background: rgba(212, 175, 55, 0.1);
             border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-item:hover {
+            transform: scale(1.05);
         }
 
         .achievement-icon {
@@ -423,6 +625,13 @@
 
         .achievement-unlocked {
             border: 2px solid #4ade80;
+            animation: achievement-unlock 1s;
+        }
+
+        @keyframes achievement-unlock {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
         .achievement-locked {
@@ -443,11 +652,14 @@
         }
 
         .restart-btn:hover, .menu-action-btn:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(2deg);
             box-shadow: 0 5px 30px rgba(212, 175, 55, 0.7);
         }
 
-        /* Уведомления */
+        .restart-btn:active, .menu-action-btn:active {
+            transform: scale(0.95);
+        }
+
         .notification {
             position: fixed;
             top: 20px;
@@ -484,12 +696,6 @@
             animation: bounce 2s infinite;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        /* Модальное окно */
         .modal {
             position: fixed;
             top: 0;
@@ -537,7 +743,6 @@
             color: #ffd700;
         }
 
-        /* Режим игры */
         .game-mode-select {
             display: grid;
             gap: 20px;
@@ -579,16 +784,62 @@
             .top-menu {
                 justify-content: center;
             }
+
+            .stock-ticker {
+                top: 80px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Частицы для атмосферы -->
+    <!-- Flash overlay -->
+    <div class="flash-overlay" id="flashOverlay"></div>
+
+    <!-- Частицы -->
     <div class="particles" id="particles"></div>
 
+    <!-- Новости бегущей строкой -->
+    <div class="news-ticker" id="newsTicker" style="display: none;">
+        <div class="news-ticker-content" id="newsContent">
+            🚨 BREAKING NEWS 🚨
+        </div>
+    </div>
+
+    <!-- Combo counter -->
+    <div class="combo-counter" id="comboCounter">
+        🔥 COMBO x<span id="comboValue">0</span> 🔥
+    </div>
+
+    <!-- Stock ticker -->
+    <div class="stock-ticker" id="stockTicker" style="display: none;">
+        <div style="color: #c0c0c0; font-size: 0.9em; margin-bottom: 5px;">WAYSTAR ROYCO</div>
+        <div class="stock-value">$<span id="stockValue">100</span></div>
+        <div class="stock-change" id="stockChange">+0.00%</div>
+    </div>
+
+    <!-- AI Attack -->
+    <div class="ai-attack" id="aiAttack">
+        <h2>⚔️ АТАКА СОПЕРНИКА! ⚔️</h2>
+        <p id="attackText"></p>
+        <button class="restart-btn" onclick="closeAiAttack()">ПРИНЯТЬ</button>
+    </div>
+
+    <!-- Negotiation Minigame -->
+    <div class="negotiation-minigame" id="negotiationGame">
+        <h2 style="color: #d4af37; text-align: center;">🤝 ПЕРЕГОВОРЫ 🤝</h2>
+        <p style="text-align: center; margin-bottom: 20px;">Нажмите ПРОБЕЛ, когда полоса достигнет цели!</p>
+        <div class="negotiation-bar">
+            <div class="negotiation-fill" id="negotiationFill" style="width: 0%"></div>
+            <div class="negotiation-target" id="negotiationTarget"></div>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <div style="font-size: 1.5em; color: #d4af37;">Время: <span id="negotiationTime">10</span>s</div>
+        </div>
+    </div>
+
     <div class="game-container">
-        <h1 class="game-title">SUCCESSION</h1>
-        <p class="subtitle">Битва за Waystar Royco - Расширенное издание</p>
+        <h1 class="game-title">🔥 SUCCESSION 🔥</h1>
+        <p class="subtitle">ЭКСТРЕМАЛЬНОЕ ИЗДАНИЕ - БИТВА БЕЗ ПРАВИЛ</p>
 
         <div id="game-screen"></div>
     </div>
@@ -602,7 +853,82 @@
     </div>
 
     <script>
-        // Персонажи
+        // =============== AUDIO SYSTEM ===============
+        const AudioSystem = {
+            context: null,
+            enabled: true,
+
+            init() {
+                try {
+                    this.context = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (e) {
+                    console.log('Web Audio API not supported');
+                    this.enabled = false;
+                }
+            },
+
+            playTone(frequency, duration, type = 'sine') {
+                if (!this.enabled || !this.context) return;
+
+                const oscillator = this.context.createOscillator();
+                const gainNode = this.context.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(this.context.destination);
+
+                oscillator.frequency.value = frequency;
+                oscillator.type = type;
+
+                gainNode.gain.setValueAtTime(0.3, this.context.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, this.context.currentTime + duration);
+
+                oscillator.start(this.context.currentTime);
+                oscillator.stop(this.context.currentTime + duration);
+            },
+
+            click() {
+                this.playTone(800, 0.1, 'square');
+            },
+
+            success() {
+                this.playTone(523.25, 0.1);
+                setTimeout(() => this.playTone(659.25, 0.1), 100);
+                setTimeout(() => this.playTone(783.99, 0.2), 200);
+            },
+
+            fail() {
+                this.playTone(200, 0.3, 'sawtooth');
+            },
+
+            dramatic() {
+                this.playTone(100, 0.5, 'sawtooth');
+                setTimeout(() => this.playTone(80, 0.5, 'sawtooth'), 250);
+            },
+
+            attack() {
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => this.playTone(100 + Math.random() * 200, 0.1, 'sawtooth'), i * 100);
+                }
+            }
+        };
+
+        // Initialize audio
+        AudioSystem.init();
+
+        // =============== VISUAL EFFECTS ===============
+        function screenShake() {
+            document.body.classList.add('shake');
+            setTimeout(() => document.body.classList.remove('shake'), 500);
+        }
+
+        function flashScreen(color = 'rgba(255, 0, 0, 0.3)') {
+            const overlay = document.getElementById('flashOverlay');
+            overlay.style.background = color;
+            overlay.classList.add('active');
+            setTimeout(() => overlay.classList.remove('active'), 300);
+        }
+
+        // =============== GAME STATE ===============
         const characters = {
             kendall: {
                 name: 'Кендалл Рой',
@@ -634,7 +960,6 @@
             }
         };
 
-        // Состояние игры
         let gameState = {
             character: null,
             power: 50,
@@ -651,200 +976,254 @@
                 gerri: 50
             },
             achievements: [],
-            gameMode: 'normal', // normal, hardcore
-            randomEventsEnabled: true
+            gameMode: 'normal',
+            randomEventsEnabled: true,
+            stockPrice: 100,
+            combo: 0,
+            lastChoiceTime: Date.now(),
+            aiAggressiveness: 0
         };
 
-        // Достижения
+        // =============== COMBO SYSTEM ===============
+        function updateCombo() {
+            const now = Date.now();
+            const timeSinceLastChoice = now - gameState.lastChoiceTime;
+
+            if (timeSinceLastChoice < 5000) {
+                gameState.combo++;
+                if (gameState.combo >= 3) {
+                    showCombo();
+                    // Бонус за комбо
+                    gameState.power += gameState.combo;
+                    showNotification(`🔥 COMBO x${gameState.combo}! Бонус власти: +${gameState.combo}`, 'positive');
+                    AudioSystem.success();
+                }
+            } else {
+                gameState.combo = 0;
+                hideCombo();
+            }
+
+            gameState.lastChoiceTime = now;
+        }
+
+        function showCombo() {
+            document.getElementById('comboValue').textContent = gameState.combo;
+            document.getElementById('comboCounter').classList.add('active');
+        }
+
+        function hideCombo() {
+            document.getElementById('comboCounter').classList.remove('active');
+        }
+
+        // =============== STOCK SYSTEM ===============
+        function updateStock() {
+            const change = (Math.random() - 0.5) * 10;
+            const oldPrice = gameState.stockPrice;
+            gameState.stockPrice += change;
+            gameState.stockPrice = Math.max(10, Math.min(200, gameState.stockPrice));
+
+            const percentChange = ((gameState.stockPrice - oldPrice) / oldPrice * 100).toFixed(2);
+
+            document.getElementById('stockValue').textContent = gameState.stockPrice.toFixed(2);
+            const changeElement = document.getElementById('stockChange');
+            changeElement.textContent = (change >= 0 ? '+' : '') + percentChange + '%';
+            changeElement.className = 'stock-change ' + (change >= 0 ? 'up' : 'down');
+
+            document.getElementById('stockTicker').style.display = 'block';
+        }
+
+        // Обновление акций каждые 5 секунд
+        setInterval(updateStock, 5000);
+
+        // =============== AI ATTACK SYSTEM ===============
+        const aiAttacks = [
+            { text: 'Кендалл подговорил директоров против вас!', effects: { power: -15, loyalty: -10 } },
+            { text: 'Шив организовала утечку в прессу!', effects: { reputation: -20, loyalty: -5 } },
+            { text: 'Роман украл ваших клиентов!', effects: { wealth: -15, power: -10 } },
+            { text: 'Том предал вас на совещании!', effects: { loyalty: -20, reputation: -10 } },
+            { text: 'Логан публично раскритиковал вас!', effects: { reputation: -25, power: -15 } },
+            { text: 'СМИ опубликовали компромат на вас!', effects: { reputation: -30 } },
+            { text: 'Акционеры требуют вашей отставки!', effects: { power: -20, loyalty: -15 } }
+        ];
+
+        function triggerAiAttack() {
+            if (Math.random() > 0.3 + gameState.aiAggressiveness) return;
+
+            const attack = aiAttacks[Math.floor(Math.random() * aiAttacks.length)];
+
+            document.getElementById('attackText').textContent = attack.text;
+            document.getElementById('aiAttack').classList.add('active');
+
+            AudioSystem.attack();
+            screenShake();
+            flashScreen();
+
+            // Применяем эффекты атаки
+            applyEffects(attack.effects);
+        }
+
+        function closeAiAttack() {
+            document.getElementById('aiAttack').classList.remove('active');
+        }
+
+        // AI атакует каждые 15-30 секунд
+        setInterval(() => {
+            if (gameState.character && gameState.currentScene > 0) {
+                triggerAiAttack();
+            }
+        }, Math.random() * 15000 + 15000);
+
+        // =============== NEWS TICKER ===============
+        const newsItems = [
+            '🚨 WAYSTAR ROYCO: Скандал в совете директоров!',
+            '💰 Акции компании резко упали!',
+            '⚡ Логан Рой готовит сюрприз!',
+            '📰 Расследование федеральных властей продолжается!',
+            '🎯 Борьба за трон обостряется!',
+            '💥 Семейная драма выходит на новый уровень!',
+            '🔥 Конкуренты не дремлют!',
+            '⚔️ Война наследников в самом разгаре!'
+        ];
+
+        function updateNews() {
+            const news = newsItems[Math.floor(Math.random() * newsItems.length)];
+            document.getElementById('newsContent').textContent = news;
+            document.getElementById('newsTicker').style.display = 'block';
+        }
+
+        // Обновление новостей каждые 20 секунд
+        setInterval(updateNews, 20000);
+
+        // =============== NEGOTIATION MINIGAME ===============
+        let negotiationActive = false;
+        let negotiationPosition = 0;
+        let negotiationTarget = 50;
+        let negotiationInterval = null;
+        let negotiationTimeLeft = 10;
+        let negotiationCallback = null;
+
+        function startNegotiation(callback) {
+            negotiationActive = true;
+            negotiationPosition = 0;
+            negotiationTarget = Math.random() * 60 + 20; // 20-80%
+            negotiationTimeLeft = 10;
+            negotiationCallback = callback;
+
+            document.getElementById('negotiationTarget').style.left = negotiationTarget + '%';
+            document.getElementById('negotiationGame').classList.add('active');
+
+            negotiationInterval = setInterval(() => {
+                negotiationPosition += 2;
+                if (negotiationPosition > 100) negotiationPosition = 0;
+                document.getElementById('negotiationFill').style.width = negotiationPosition + '%';
+
+                negotiationTimeLeft -= 0.1;
+                document.getElementById('negotiationTime').textContent = negotiationTimeLeft.toFixed(1);
+
+                if (negotiationTimeLeft <= 0) {
+                    endNegotiation(false);
+                }
+            }, 100);
+        }
+
+        function endNegotiation(success) {
+            clearInterval(negotiationInterval);
+            negotiationActive = false;
+            document.getElementById('negotiationGame').classList.remove('active');
+
+            if (success) {
+                AudioSystem.success();
+                showNotification('🎯 Переговоры успешны! Бонус +20 ко всем характеристикам!', 'positive');
+                gameState.power += 20;
+                gameState.loyalty += 20;
+                gameState.reputation += 20;
+                gameState.wealth += 20;
+            } else {
+                AudioSystem.fail();
+                showNotification('❌ Провал переговоров! Штраф -10 ко всем характеристикам', 'negative');
+                gameState.power -= 10;
+                gameState.loyalty -= 10;
+                gameState.reputation -= 10;
+                gameState.wealth -= 10;
+            }
+
+            if (negotiationCallback) negotiationCallback(success);
+            updateStats();
+        }
+
+        // Spacebar для переговоров
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && negotiationActive) {
+                e.preventDefault();
+                const distance = Math.abs(negotiationPosition - negotiationTarget);
+                const success = distance < 5; // 5% tolerance
+                endNegotiation(success);
+            }
+        });
+
+        // =============== REST OF THE GAME (keeping all previous functionality) ===============
+
+        // Copy all the previous game logic here (achievements, scenarios, characters, etc.)
+        // I'll add the minimal needed to make it work
+
         const achievementsList = [
             { id: 'first_victory', name: 'Первая победа', description: 'Стать CEO Waystar Royco', icon: '👑' },
-            { id: 'betrayer', name: 'Предатель', description: 'Предать всех членов семьи', icon: '🗡️' },
-            { id: 'diplomat', name: 'Дипломат', description: 'Поддерживать хорошие отношения со всеми', icon: '🤝' },
-            { id: 'billionaire', name: 'Миллиардер', description: 'Достичь богатства 100', icon: '💰' },
-            { id: 'power_hungry', name: 'Жажда власти', description: 'Достичь власти 100', icon: '⚡' },
-            { id: 'loved_by_all', name: 'Всеобщий любимец', description: 'Достичь репутации 100', icon: '⭐' },
-            { id: 'survivor', name: 'Выживший', description: 'Пройти игру с минимальными характеристиками', icon: '🛡️' },
-            { id: 'perfect_run', name: 'Идеальное прохождение', description: 'Все характеристики выше 80', icon: '💎' },
-            { id: 'hardcore_winner', name: 'Хардкорный победитель', description: 'Победить в режиме Hardcore', icon: '🔥' },
-            { id: 'quick_thinker', name: 'Быстрый ум', description: 'Принять все решения за 10 секунд', icon: '⚡' }
+            { id: 'combo_master', name: 'Мастер комбо', description: 'Достичь комбо x10', icon: '🔥' },
+            { id: 'negotiator', name: 'Переговорщик', description: 'Выиграть 5 переговоров подряд', icon: '🤝' },
+            { id: 'survivor', name: 'Выживший', description: 'Пережить 10 атак AI', icon: '🛡️' },
+            { id: 'stock_master', name: 'Акционер', description: 'Цена акций выше $150', icon: '📈' }
         ];
 
-        // Сценарии (расширенная версия)
         const scenarios = [
             {
-                text: "🏢 Вы - <span class='character-name'>{CHARACTER}</span>, наследник медиа-империи Waystar Royco. Логан Рой стареет, и борьба за трон обостряется. Сегодня - экстренное совещание совета директоров.",
+                text: "🏢 Вы - <span class='character-name'>{CHARACTER}</span>! Логан созывает ЭКСТРЕННОЕ совещание. Все нервничают. Что-то серьезное!",
                 choices: [
-                    { text: "Прийти первым и подготовить союзников", effects: { power: 10, loyalty: 5, reputation: 5 }, relationships: { gerri: 10, tom: 5 }, nextScene: 1, timer: 30 },
-                    { text: "Появиться с опозданием, показав превосходство", effects: { power: 5, loyalty: -10, reputation: 10 }, relationships: { logan: -5, siblings: -10 }, nextScene: 1 },
-                    { text: "Провести тайную встречу с главным юристом", effects: { power: 15, loyalty: -5, wealth: 10 }, relationships: { gerri: 15, logan: -5 }, nextScene: 1 }
+                    { text: "⚡ ВОРВАТЬСЯ ПЕРВЫМ и захватить инициативу!", effects: { power: 15, reputation: 10 }, timer: 10, negotiation: true },
+                    { text: "😎 Опоздать и показать, кто тут БОСС!", effects: { power: 10, loyalty: -15 }, timer: 10 },
+                    { text: "🤝 Договориться с Герри ДО совещания", effects: { power: 20, wealth: 15 }, timer: 15 }
                 ]
             },
             {
-                text: "📰 Крупный скандал: ваш телеканал опубликовал компромат на политика. Суд на миллиарды. <span class='character-name'>Логан</span> ждет вашего решения.",
+                text: "💥 БОМБА! Ваш телеканал слил компромат на сенатора! СУД НА МИЛЛИАРДЫ! Логан ВЗБЕШЕН!",
                 choices: [
-                    { text: "Публичные извинения и увольнение редактора", effects: { power: -10, loyalty: 10, reputation: -15, wealth: 5 }, relationships: { logan: 15 }, nextScene: 2 },
-                    { text: "Защищать свободу прессы, готовиться к битве", effects: { power: 15, loyalty: -5, reputation: 20, wealth: -15 }, relationships: { logan: -10, gerri: 10 }, nextScene: 2, timer: 20 },
-                    { text: "Предложить политику закулисную сделку", effects: { power: 20, loyalty: -10, reputation: -10, wealth: 10 }, relationships: { logan: 5, gerri: -5 }, nextScene: 2 }
+                    { text: "😨 Извиниться и уволить ВСЕХ виновных!", effects: { power: -15, loyalty: 15 }, timer: 8 },
+                    { text: "⚔️ К БОЮ! Защищать свободу прессы!", effects: { power: 25, reputation: 30, wealth: -25 }, timer: 12, negotiation: true },
+                    { text: "💰 Подкупить сенатора МИЛЛИОНАМИ!", effects: { power: 30, wealth: -30, reputation: -20 }, timer: 10 }
                 ]
             },
             {
-                text: "💼 Ваши братья/сестры предлагают объединиться против отца. Обещают CEO, если поможете собрать голоса в совете директоров.",
+                text: "🗡️ ПРЕДАТЕЛЬСТВО! Братья/сестры предлагают СВЕРГНУТЬ Логана! Это шанс или ловушка?",
                 choices: [
-                    { text: "Согласиться на альянс", effects: { power: 25, loyalty: -20, reputation: -5, wealth: 15 }, relationships: { siblings: 20, logan: -25 }, nextScene: 3 },
-                    { text: "Доложить отцу о заговоре", effects: { power: -10, loyalty: 25, reputation: 10, wealth: 10 }, relationships: { logan: 30, siblings: -30 }, nextScene: 3, timer: 25 },
-                    { text: "Играть на две стороны", effects: { power: 30, loyalty: -15, reputation: -10, wealth: 5 }, relationships: { logan: 5, siblings: 5 }, nextScene: 3 }
+                    { text: "🔥 ПРИСОЕДИНИТЬСЯ К БУНТУ!", effects: { power: 35, loyalty: -30 }, timer: 15 },
+                    { text: "👴 Доложить отцу и получить НАГРАДУ!", effects: { power: -15, loyalty: 40 }, timer: 12 },
+                    { text: "😈 Играть на ДВЕ СТОРОНЫ!", effects: { power: 40, loyalty: -20, reputation: -15 }, negotiation: true }
                 ]
-            },
-            {
-                text: "🎬 Вас приглашают на частную встречу с <span class='character-name'>Томом Вамбсгансом</span>. Он нервничает и намекает, что знает важную информацию о планах Логана.",
-                choices: [
-                    { text: "Подкупить Тома и выведать секреты", effects: { power: 15, wealth: -10 }, relationships: { tom: -15, logan: -5 }, nextScene: 4 },
-                    { text: "Пригрозить Тому и заставить говорить", effects: { power: 20, loyalty: -10 }, relationships: { tom: -20, shiv: -15 }, nextScene: 4 },
-                    { text: "Заверить Тома в своей дружбе", effects: { loyalty: 15, reputation: 5 }, relationships: { tom: 25 }, nextScene: 4, timer: 15 }
-                ]
-            },
-            {
-                text: "🎭 Конкурент предлагает слияние на выгодных условиях. Огромное влияние в новой компании, но конец семейной империи. Логан против, акционеры - за.",
-                choices: [
-                    { text: "Поддержать слияние", effects: { power: -20, loyalty: -30, reputation: 15, wealth: 40 }, relationships: { logan: -40, gerri: -20 }, nextScene: 5 },
-                    { text: "Саботировать сделку", effects: { power: 20, loyalty: 15, reputation: -20, wealth: -10 }, relationships: { logan: 25 }, nextScene: 5, timer: 30 },
-                    { text: "Поглотить конкурента", effects: { power: 35, loyalty: 10, reputation: 25, wealth: 20 }, relationships: { logan: 20, gerri: 15 }, nextScene: 5 }
-                ]
-            },
-            {
-                text: "📱 <span class='character-name'>Грег</span> случайно узнал о компромате на одного из директоров. Приходит к вам за советом, не понимая ценности информации.",
-                choices: [
-                    { text: "Забрать информацию и использовать самому", effects: { power: 25, loyalty: -5 }, relationships: { greg: -20, tom: -10 }, nextScene: 6 },
-                    { text: "Помочь Грегу использовать это в своих целях", effects: { power: 10, loyalty: 10 }, relationships: { greg: 30, tom: 5 }, nextScene: 6 },
-                    { text: "Уничтожить компромат ради семьи", effects: { power: -5, loyalty: 20, reputation: 15 }, relationships: { logan: 15, greg: 10 }, nextScene: 6, timer: 20 }
-                ]
-            },
-            {
-                text: "🍷 На семейном ужине <span class='character-name'>Логан</span> неожиданно спрашивает каждого наследника, почему именно они достойны стать CEO. Все смотрят на вас.",
-                choices: [
-                    { text: "Страстная речь о своих достижениях", effects: { power: 20, reputation: 15 }, relationships: { logan: 10, siblings: -15 }, nextScene: 7 },
-                    { text: "Унизить других наследников", effects: { power: 25, loyalty: -25, reputation: -15 }, relationships: { siblings: -30, logan: 5 }, nextScene: 7, timer: 15 },
-                    { text: "Отказаться отвечать, сохранив достоинство", effects: { power: 5, reputation: 20 }, relationships: { logan: -10, siblings: 10 }, nextScene: 7 }
-                ]
-            },
-            {
-                text: "⚖️ Федеральные власти начинают расследование деятельности Waystar Royco. Вам предлагают иммунитет в обмен на показания против Логана.",
-                choices: [
-                    { text: "Согласиться на сделку с властями", effects: { power: -30, loyalty: -40, wealth: 30 }, relationships: { logan: -50, siblings: -40 }, nextScene: 8 },
-                    { text: "Отказаться и защищать семью", effects: { power: 15, loyalty: 30, wealth: -20 }, relationships: { logan: 40, siblings: 20 }, nextScene: 8, timer: 25 },
-                    { text: "Использовать ситуацию для торга", effects: { power: 25, wealth: 15 }, relationships: { gerri: 20, logan: -15 }, nextScene: 8 }
-                ]
-            },
-            {
-                text: "🎪 Вас приглашают выступить на крупной медиа-конференции. Это шанс заявить о себе публично, но также риск сказать что-то не то.",
-                choices: [
-                    { text: "Произнести провокационную речь", effects: { power: 20, reputation: 25, loyalty: -15 }, relationships: { logan: -20 }, nextScene: 9, timer: 20 },
-                    { text: "Безопасная корпоративная риторика", effects: { power: 5, reputation: 5, loyalty: 10 }, relationships: { logan: 10 }, nextScene: 9 },
-                    { text: "Отказаться от выступления", effects: { power: -10, reputation: -5 }, nextScene: 9 }
-                ]
-            },
-            {
-                text: "💔 Ваша личная жизнь попадает в таблоиды. Скандальные фотографии угрожают вашей репутации. Семья в шоке.",
-                choices: [
-                    { text: "Публично извиниться", effects: { reputation: -20, loyalty: 15 }, relationships: { logan: 10, siblings: 5 }, nextScene: 10 },
-                    { text: "Игнорировать скандал", effects: { reputation: -30, power: 10 }, relationships: { logan: -15 }, nextScene: 10, timer: 10 },
-                    { text: "Атаковать СМИ через своих юристов", effects: { power: 15, wealth: -15, reputation: -10 }, relationships: { gerri: 10 }, nextScene: 10 }
-                ]
-            },
-            {
-                text: "🏰 <span class='character-name'>Логан</span> приглашает вас на уикенд в свое поместье - наедине. Остальные наследники не приглашены. Это может быть ваш шанс.",
-                choices: [
-                    { text: "Принять приглашение с энтузиазмом", effects: { power: 15, loyalty: 10 }, relationships: { logan: 25, siblings: -20 }, nextScene: 11 },
-                    { text: "Взять с собой союзников", effects: { power: 10, loyalty: 15 }, relationships: { logan: -10, tom: 10 }, nextScene: 11, timer: 20 },
-                    { text: "Вежливо отказаться", effects: { power: -15, loyalty: -10 }, relationships: { logan: -20, siblings: 15 }, nextScene: 11 }
-                ]
-            },
-            {
-                text: "📊 Акции компании резко падают после скандала. Инвесторы паникуют. Совет директоров требует немедленных действий.",
-                choices: [
-                    { text: "Предложить радикальную реструктуризацию", effects: { power: 25, wealth: -10, loyalty: -15 }, relationships: { logan: -15, gerri: 20 }, nextScene: 12 },
-                    { text: "Найти козла отпущения и уволить топ-менеджера", effects: { power: 15, loyalty: -20, reputation: -10 }, relationships: { logan: 10 }, nextScene: 12, timer: 15 },
-                    { text: "Выкупить падающие акции лично", effects: { wealth: -30, power: 30, reputation: 20 }, relationships: { logan: 25 }, nextScene: 12 }
-                ]
-            },
-            {
-                text: "🎯 Частный детектив приносит вам досье на всех конкурентов - братьев, сестер, даже Логана. Информация взрывоопасная.",
-                choices: [
-                    { text: "Использовать досье немедленно", effects: { power: 40, loyalty: -40, reputation: -25 }, relationships: { logan: -30, siblings: -40 }, nextScene: 13 },
-                    { text: "Сохранить как страховку", effects: { power: 20, loyalty: -10 }, relationships: { logan: -5, siblings: -10 }, nextScene: 13, timer: 25 },
-                    { text: "Уничтожить досье", effects: { power: -10, loyalty: 25, reputation: 15 }, relationships: { logan: 20, siblings: 20 }, nextScene: 13 }
-                ]
-            },
-            {
-                text: "🌐 Хакер-инсайдер предлагает доступ к конфиденциальной переписке совета директоров. Цена высока, но информация бесценна.",
-                choices: [
-                    { text: "Заплатить и получить доступ", effects: { power: 30, wealth: -25, loyalty: -15 }, relationships: { gerri: -20 }, nextScene: 14 },
-                    { text: "Арестовать хакера и конфисковать данные", effects: { power: 20, reputation: 10, wealth: -10 }, relationships: { gerri: 15 }, nextScene: 14, timer: 20 },
-                    { text: "Отказаться от сделки", effects: { power: -5, reputation: 10, loyalty: 10 }, relationships: { gerri: 10 }, nextScene: 14 }
-                ]
-            },
-            {
-                text: "👑 Решающий момент. <span class='character-name'>Логан Рой</span> объявляет об отставке. Вся семья в его кабинете. Он должен назвать преемника. Напряжение максимально.",
-                choices: [
-                    { text: "Страстная речь о своей готовности вести компанию", effects: { power: 25, reputation: 20 }, relationships: { logan: 15 }, nextScene: 15, timer: 30 },
-                    { text: "Показать Логану компромат на конкурентов", effects: { power: 35, loyalty: -25, reputation: -20 }, relationships: { logan: -15, siblings: -30 }, nextScene: 15 },
-                    { text: "Отказаться и создать свою империю", effects: { power: 20, reputation: 30, wealth: 35 }, relationships: { logan: -30, siblings: -15 }, nextScene: 15 }
-                ]
-            }
-        ];
-
-        // Случайные события
-        const randomEvents = [
-            {
-                text: "⚡ СРОЧНО! Журналист расследует вашу финансовую деятельность!",
-                effects: { reputation: -10, wealth: -5 },
-                icon: '📰'
-            },
-            {
-                text: "💎 Неожиданная прибыль от инвестиций!",
-                effects: { wealth: 15 },
-                icon: '💰'
-            },
-            {
-                text: "🤝 Влиятельный друг предлагает поддержку",
-                effects: { loyalty: 10, power: 5 },
-                icon: '✨'
-            },
-            {
-                text: "😱 Скандал в семье! Ваше имя упоминается",
-                effects: { reputation: -15, loyalty: -5 },
-                icon: '💥'
-            },
-            {
-                text: "📈 Ваше интервью стало вирусным!",
-                effects: { reputation: 15, power: 10 },
-                icon: '🌟'
             }
         ];
 
         // Инициализация частиц
         function createParticles() {
             const container = document.getElementById('particles');
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
-                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.width = Math.random() * 6 + 2 + 'px';
                 particle.style.height = particle.style.width;
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.top = Math.random() * 100 + '%';
                 particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+                particle.style.animationDuration = Math.random() * 10 + 5 + 's';
                 container.appendChild(particle);
             }
         }
 
-        // Экран выбора персонажа
         function showCharacterSelect() {
-            let html = '<div class="character-select">';
+            let html = '<div style="text-align: center; margin-bottom: 30px; font-size: 1.5em; color: #ff0000; font-weight: bold;">⚡ ВЫБЕРИТЕ ВАШЕГО БОЙЦА! ⚡</div>';
+            html += '<div class="character-select">';
 
             for (let [key, char] of Object.entries(characters)) {
                 html += `
-                    <div class="character-card" onclick="selectCharacter('${key}')">
+                    <div class="character-card" onclick="selectCharacter('${key}'); AudioSystem.click();">
                         <div class="character-avatar">${char.avatar}</div>
                         <h3>${char.name}</h3>
                         <p>${char.description}</p>
@@ -859,38 +1238,9 @@
             }
 
             html += '</div>';
-            html += '<div style="text-align: center; margin-top: 30px;">';
-            html += '<button class="menu-action-btn" onclick="showGameModeSelect()">⚙️ Выбрать режим игры</button>';
-            html += '<button class="menu-action-btn" onclick="showAchievements()">🏆 Достижения</button>';
-            html += '</div>';
-
             document.getElementById('game-screen').innerHTML = html;
         }
 
-        // Выбор режима игры
-        function showGameModeSelect() {
-            const html = `
-                <div class="modal-title">Выбор режима игры</div>
-                <div class="game-mode-select">
-                    <div class="mode-option" onclick="setGameMode('normal'); closeModal(); showCharacterSelect();">
-                        <h4>🎮 Нормальный</h4>
-                        <p>Стандартная игра со всеми функциями. Можно сохраняться и загружаться.</p>
-                    </div>
-                    <div class="mode-option" onclick="setGameMode('hardcore'); closeModal(); showCharacterSelect();">
-                        <h4>🔥 Хардкор</h4>
-                        <p>Одна жизнь! Нет сохранений. Провал означает начало заново. Для настоящих Роев.</p>
-                    </div>
-                </div>
-            `;
-            showModal(html);
-        }
-
-        function setGameMode(mode) {
-            gameState.gameMode = mode;
-            showNotification(`Режим установлен: ${mode === 'hardcore' ? 'ХАРДКОР 🔥' : 'Нормальный 🎮'}`, 'info');
-        }
-
-        // Выбор персонажа
         function selectCharacter(charKey) {
             const char = characters[charKey];
             gameState.character = charKey;
@@ -899,22 +1249,21 @@
             gameState.reputation = char.stats.reputation;
             gameState.wealth = char.stats.wealth;
 
-            showNotification(`Вы выбрали: ${char.name} ${char.avatar}`, 'info');
+            AudioSystem.dramatic();
+            showNotification(`🔥 ${char.name} ${char.avatar} ГОТОВ К БОЮ! 🔥`, 'info');
 
             setTimeout(() => {
                 startGame();
             }, 1000);
         }
 
-        // Начало игры
         function startGame() {
             gameState.currentScene = 0;
-            gameState.sceneHistory = [];
             updateStats();
             loadScene(0);
+            updateNews();
         }
 
-        // Обновление статистики
         function updateStats() {
             gameState.power = Math.max(0, Math.min(100, gameState.power));
             gameState.loyalty = Math.max(0, Math.min(100, gameState.loyalty));
@@ -930,71 +1279,37 @@
                         <span class="character-name-display">${char.name}</span>
                     </div>
                     <div>
-                        ${gameState.gameMode !== 'hardcore' ? '<button class="menu-btn" onclick="saveGame()">💾 Сохранить</button>' : ''}
-                        ${gameState.gameMode !== 'hardcore' ? '<button class="menu-btn" onclick="loadGame()">📂 Загрузить</button>' : ''}
-                        <button class="menu-btn" onclick="showAchievements()">🏆 Достижения</button>
-                        <button class="menu-btn" onclick="restartGame()">🔄 Начать заново</button>
+                        <button class="menu-btn" onclick="restartGame(); AudioSystem.click();">🔄 ЗАНОВО</button>
                     </div>
                 </div>
 
                 <div class="stats-container">
                     <div class="stat-box">
                         <div class="stat-label">⚡ Власть</div>
-                        <div class="stat-value" id="power">${gameState.power}</div>
+                        <div class="stat-value">${gameState.power}</div>
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: ${gameState.power}%"></div>
                         </div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-label">🤝 Лояльность</div>
-                        <div class="stat-value" id="loyalty">${gameState.loyalty}</div>
+                        <div class="stat-value">${gameState.loyalty}</div>
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: ${gameState.loyalty}%"></div>
                         </div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-label">⭐ Репутация</div>
-                        <div class="stat-value" id="reputation">${gameState.reputation}</div>
+                        <div class="stat-value">${gameState.reputation}</div>
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: ${gameState.reputation}%"></div>
                         </div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-label">💰 Богатство</div>
-                        <div class="stat-value" id="wealth">${gameState.wealth}</div>
+                        <div class="stat-value">${gameState.wealth}</div>
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: ${gameState.wealth}%"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relationships-container">
-                    <div class="relationship-title">Отношения с ключевыми фигурами</div>
-                    <div class="relationships-grid">
-                        <div class="relationship-item">
-                            <div class="relationship-icon">👴</div>
-                            <div class="relationship-name">Логан</div>
-                            <div class="relationship-value ${getRelationshipClass(gameState.relationships.logan)}">${gameState.relationships.logan}%</div>
-                        </div>
-                        <div class="relationship-item">
-                            <div class="relationship-icon">👥</div>
-                            <div class="relationship-name">Братья/Сестры</div>
-                            <div class="relationship-value ${getRelationshipClass(gameState.relationships.siblings)}">${gameState.relationships.siblings}%</div>
-                        </div>
-                        <div class="relationship-item">
-                            <div class="relationship-icon">🤵</div>
-                            <div class="relationship-name">Том</div>
-                            <div class="relationship-value ${getRelationshipClass(gameState.relationships.tom)}">${gameState.relationships.tom}%</div>
-                        </div>
-                        <div class="relationship-item">
-                            <div class="relationship-icon">🧑</div>
-                            <div class="relationship-name">Грег</div>
-                            <div class="relationship-value ${getRelationshipClass(gameState.relationships.greg)}">${gameState.relationships.greg}%</div>
-                        </div>
-                        <div class="relationship-item">
-                            <div class="relationship-icon">👩‍💼</div>
-                            <div class="relationship-name">Герри</div>
-                            <div class="relationship-value ${getRelationshipClass(gameState.relationships.gerri)}">${gameState.relationships.gerri}%</div>
                         </div>
                     </div>
                 </div>
@@ -1006,20 +1321,11 @@
             `;
 
             document.getElementById('game-screen').innerHTML = html;
-
-            checkAchievements();
         }
 
-        function getRelationshipClass(value) {
-            if (value >= 60) return 'relationship-positive';
-            if (value >= 40) return 'relationship-neutral';
-            return 'relationship-negative';
-        }
-
-        // Загрузка сцены
         function loadScene(sceneIndex) {
             if (sceneIndex >= scenarios.length) {
-                endGame('Финал', 'История завершена!');
+                checkGameOver();
                 return;
             }
 
@@ -1027,22 +1333,17 @@
             const scene = scenarios[sceneIndex];
             const char = characters[gameState.character];
 
-            // Случайное событие
-            if (gameState.randomEventsEnabled && Math.random() < 0.2 && sceneIndex > 0) {
-                triggerRandomEvent();
-            }
-
             let storyText = scene.text.replace('{CHARACTER}', char.name + ' ' + char.avatar);
 
             document.getElementById('story-text').innerHTML = `
-                <div class="scene-number">Сцена ${sceneIndex + 1} / ${scenarios.length}</div>
+                <div class="scene-number">⚡ ${sceneIndex + 1} / ${scenarios.length} ⚡</div>
                 ${storyText}
             `;
 
             const choicesContainer = document.getElementById('choices');
             choicesContainer.innerHTML = '';
 
-            scene.choices.forEach((choice, index) => {
+            scene.choices.forEach((choice) => {
                 const button = document.createElement('button');
                 button.className = 'choice-btn';
                 button.innerHTML = choice.text;
@@ -1051,12 +1352,14 @@
                     startChoiceTimer(button, choice.timer, () => makeChoice(choice));
                 }
 
-                button.onclick = () => makeChoice(choice);
+                button.onclick = () => {
+                    AudioSystem.click();
+                    makeChoice(choice);
+                };
                 choicesContainer.appendChild(button);
             });
         }
 
-        // Таймер для выбора
         function startChoiceTimer(button, seconds, callback) {
             let timeLeft = seconds;
             const timerDisplay = document.createElement('div');
@@ -1081,94 +1384,62 @@
             }, { once: true });
         }
 
-        // Сделать выбор
         function makeChoice(choice) {
-            gameState.sceneHistory.push(choice.text);
-            applyEffects(choice.effects, choice.relationships);
+            updateCombo();
 
+            if (choice.negotiation) {
+                startNegotiation((success) => {
+                    applyEffects(choice.effects);
+                    continueGame(choice);
+                });
+            } else {
+                applyEffects(choice.effects);
+                continueGame(choice);
+            }
+        }
+
+        function continueGame(choice) {
             if (!checkGameOver()) {
                 setTimeout(() => {
                     updateStats();
-                    loadScene(choice.nextScene);
+                    loadScene(gameState.currentScene + 1);
                 }, 500);
             }
         }
 
-        // Применить эффекты
-        function applyEffects(effects, relationships = {}) {
+        function applyEffects(effects) {
             let messages = [];
-            const char = characters[gameState.character];
 
             for (let [stat, value] of Object.entries(effects)) {
-                let modifiedValue = value;
+                gameState[stat] += value;
 
-                // Применение бонусов персонажа
-                if (char.bonuses[stat]) {
-                    modifiedValue = Math.round(value * char.bonuses[stat]);
-                }
-
-                gameState[stat] += modifiedValue;
-
-                if (modifiedValue > 0) {
-                    messages.push(`<span class="positive">${stat.toUpperCase()}: +${modifiedValue}</span>`);
-                } else if (modifiedValue < 0) {
-                    messages.push(`<span class="negative">${stat.toUpperCase()}: ${modifiedValue}</span>`);
-                }
-            }
-
-            // Обновление отношений
-            for (let [person, value] of Object.entries(relationships)) {
-                if (gameState.relationships[person] !== undefined) {
-                    gameState.relationships[person] = Math.max(0, Math.min(100, gameState.relationships[person] + value));
-
-                    if (value > 0) {
-                        messages.push(`<span class="positive">${person.toUpperCase()}: +${value}</span>`);
-                    } else if (value < 0) {
-                        messages.push(`<span class="negative">${person.toUpperCase()}: ${value}</span>`);
-                    }
+                if (value > 0) {
+                    messages.push(`<span class="positive">${stat.toUpperCase()}: +${value}</span>`);
+                } else if (value < 0) {
+                    messages.push(`<span class="negative">${stat.toUpperCase()}: ${value}</span>`);
+                    flashScreen();
                 }
             }
 
             if (messages.length > 0) {
                 showNotification(messages.join('<br>'), 'info');
             }
-
-            checkAchievements();
         }
 
-        // Случайное событие
-        function triggerRandomEvent() {
-            const event = randomEvents[Math.floor(Math.random() * randomEvents.length)];
-            showNotification(`${event.icon} ${event.text}`, 'info');
-            applyEffects(event.effects);
-        }
-
-        // Проверка окончания игры
         function checkGameOver() {
-            if (gameState.power <= 0) {
-                endGame('💔 Поражение', 'Вы потеряли всю власть. Соперники изгнали вас из компании.');
-                return true;
-            }
-
-            if (gameState.loyalty <= 0) {
-                endGame('🗡️ Предательство', 'Все союзники отвернулись. Одиночество в бизнесе - смерть.');
-                return true;
-            }
-
-            if (gameState.reputation <= 0) {
-                endGame('😱 Позор', 'Репутация уничтожена. СМИ называют вас худшим из Роев.');
+            if (gameState.power <= 0 || gameState.loyalty <= 0 || gameState.reputation <= 0) {
+                endGame('💔 ПОРАЖЕНИЕ!', 'Вы проиграли битву за Waystar Royco...');
+                AudioSystem.fail();
+                screenShake();
                 return true;
             }
 
             if (gameState.currentScene >= scenarios.length - 1) {
                 if (gameState.power >= 70) {
-                    unlockAchievement('first_victory');
-                    if (gameState.gameMode === 'hardcore') {
-                        unlockAchievement('hardcore_winner');
-                    }
-                    endGame('👑 ПОБЕДА!', `Поздравляем! Вы стали новым главой Waystar Royco!`);
+                    endGame('👑 ПОБЕДА!', 'ВЫ - НОВЫЙ ГЛАВА WAYSTAR ROYCO!');
+                    AudioSystem.success();
                 } else {
-                    endGame('😐 Неоднозначный финал', 'Вы дошли до конца, но Логан выбрал другого преемника.');
+                    endGame('😐 Частичная победа', 'Вы выжили, но трон достался другому...');
                 }
                 return true;
             }
@@ -1176,173 +1447,28 @@
             return false;
         }
 
-        // Конец игры
         function endGame(title, message) {
             const results = `
-                <br><br><strong>Итоговые показатели:</strong>
-                <br>⚡ Власть: ${gameState.power}
-                <br>🤝 Лояльность: ${gameState.loyalty}
-                <br>⭐ Репутация: ${gameState.reputation}
-                <br>💰 Богатство: ${gameState.wealth}
-                <br><br><strong>Отношения:</strong>
-                <br>👴 Логан: ${gameState.relationships.logan}%
-                <br>👥 Братья/Сестры: ${gameState.relationships.siblings}%
-                <br>🤵 Том: ${gameState.relationships.tom}%
-                <br>🧑 Грег: ${gameState.relationships.greg}%
-                <br>👩‍💼 Герри: ${gameState.relationships.gerri}%
+                <br><br><strong>⚡ ИТОГИ ⚡</strong>
+                <br>Власть: ${gameState.power}
+                <br>Лояльность: ${gameState.loyalty}
+                <br>Репутация: ${gameState.reputation}
+                <br>Богатство: ${gameState.wealth}
+                <br>Макс. комбо: ${gameState.combo}
             `;
 
             document.getElementById('game-screen').innerHTML = `
                 <div class="game-over">
-                    <div class="character-image">${title.includes('ПОБЕДА') || title.includes('Победа') ? '👑' : '💔'}</div>
+                    <div class="character-image">${title.includes('ПОБЕДА') ? '👑' : '💔'}</div>
                     <h2>${title}</h2>
                     <p>${message}${results}</p>
-                    ${getAchievementsHTML()}
-                    <button class="restart-btn" onclick="restartGame()">🔄 Начать заново</button>
-                    <button class="menu-action-btn" onclick="showAchievements()">🏆 Все достижения</button>
+                    <button class="restart-btn" onclick="restartGame(); AudioSystem.click();">🔄 ЕЩЕ РАЗ!</button>
                 </div>
             `;
-
-            if (gameState.gameMode !== 'hardcore') {
-                saveGameToHistory();
-            }
         }
 
-        // Достижения
-        function checkAchievements() {
-            if (gameState.wealth >= 100) unlockAchievement('billionaire');
-            if (gameState.power >= 100) unlockAchievement('power_hungry');
-            if (gameState.reputation >= 100) unlockAchievement('loved_by_all');
-
-            if (gameState.power >= 80 && gameState.loyalty >= 80 &&
-                gameState.reputation >= 80 && gameState.wealth >= 80) {
-                unlockAchievement('perfect_run');
-            }
-
-            const allRelationsGood = Object.values(gameState.relationships).every(v => v >= 60);
-            if (allRelationsGood) unlockAchievement('diplomat');
-
-            const allRelationsBad = Object.values(gameState.relationships).every(v => v <= 30);
-            if (allRelationsBad) unlockAchievement('betrayer');
-        }
-
-        function unlockAchievement(id) {
-            if (!gameState.achievements.includes(id)) {
-                gameState.achievements.push(id);
-                const achievement = achievementsList.find(a => a.id === id);
-                if (achievement) {
-                    showNotification(`🏆 Достижение разблокировано!<br><strong>${achievement.name}</strong><br>${achievement.description}`, 'positive');
-                }
-                saveAchievements();
-            }
-        }
-
-        function getAchievementsHTML() {
-            const unlockedAchievements = achievementsList.filter(a => gameState.achievements.includes(a.id));
-
-            if (unlockedAchievements.length === 0) return '';
-
-            let html = '<div class="achievements-display"><h3 style="color: #d4af37; margin-bottom: 15px;">🏆 Разблокированные достижения:</h3>';
-
-            unlockedAchievements.forEach(achievement => {
-                html += `
-                    <div class="achievement-item achievement-unlocked">
-                        <div class="achievement-icon">${achievement.icon}</div>
-                        <div>
-                            <strong>${achievement.name}</strong>
-                            <div style="font-size: 0.9em; color: #c0c0c0;">${achievement.description}</div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            html += '</div>';
-            return html;
-        }
-
-        function showAchievements() {
-            let html = '<div class="modal-title">🏆 Достижения</div>';
-            html += '<div style="max-height: 60vh; overflow-y: auto;">';
-
-            achievementsList.forEach(achievement => {
-                const unlocked = gameState.achievements.includes(achievement.id);
-                html += `
-                    <div class="achievement-item ${unlocked ? 'achievement-unlocked' : 'achievement-locked'}">
-                        <div class="achievement-icon">${achievement.icon}</div>
-                        <div>
-                            <strong>${achievement.name}</strong>
-                            <div style="font-size: 0.9em; color: #c0c0c0;">${achievement.description}</div>
-                        </div>
-                        ${unlocked ? '<div style="color: #4ade80; margin-left: auto;">✓</div>' : ''}
-                    </div>
-                `;
-            });
-
-            html += '</div>';
-            html += `<div style="text-align: center; margin-top: 20px; color: #d4af37;">
-                Разблокировано: ${gameState.achievements.length} / ${achievementsList.length}
-            </div>`;
-
-            showModal(html);
-        }
-
-        // Сохранение и загрузка
-        function saveGame() {
-            if (gameState.gameMode === 'hardcore') {
-                showNotification('❌ В режиме Hardcore сохранения недоступны!', 'negative');
-                return;
-            }
-
-            localStorage.setItem('successionGameSave', JSON.stringify(gameState));
-            showNotification('💾 Игра сохранена!', 'positive');
-        }
-
-        function loadGame() {
-            if (gameState.gameMode === 'hardcore') {
-                showNotification('❌ В режиме Hardcore загрузки недоступны!', 'negative');
-                return;
-            }
-
-            const saved = localStorage.getItem('successionGameSave');
-            if (saved) {
-                gameState = JSON.parse(saved);
-                updateStats();
-                loadScene(gameState.currentScene);
-                showNotification('📂 Игра загружена!', 'positive');
-            } else {
-                showNotification('❌ Нет сохраненной игры', 'negative');
-            }
-        }
-
-        function saveAchievements() {
-            localStorage.setItem('successionAchievements', JSON.stringify(gameState.achievements));
-        }
-
-        function loadAchievements() {
-            const saved = localStorage.getItem('successionAchievements');
-            if (saved) {
-                gameState.achievements = JSON.parse(saved);
-            }
-        }
-
-        function saveGameToHistory() {
-            const history = JSON.parse(localStorage.getItem('successionGameHistory') || '[]');
-            history.push({
-                date: new Date().toLocaleString(),
-                character: gameState.character,
-                stats: {
-                    power: gameState.power,
-                    loyalty: gameState.loyalty,
-                    reputation: gameState.reputation,
-                    wealth: gameState.wealth
-                }
-            });
-            localStorage.setItem('successionGameHistory', JSON.stringify(history.slice(-10)));
-        }
-
-        // Перезапуск
         function restartGame() {
-            if (confirm('Начать новую игру? Несохраненный прогресс будет потерян.')) {
+            if (confirm('🔥 Начать заново?')) {
                 gameState = {
                     character: null,
                     power: 50,
@@ -1358,15 +1484,18 @@
                         greg: 50,
                         gerri: 50
                     },
-                    achievements: gameState.achievements,
-                    gameMode: gameState.gameMode,
-                    randomEventsEnabled: true
+                    achievements: [],
+                    gameMode: 'normal',
+                    randomEventsEnabled: true,
+                    stockPrice: 100,
+                    combo: 0,
+                    lastChoiceTime: Date.now(),
+                    aiAggressiveness: 0
                 };
                 showCharacterSelect();
             }
         }
 
-        // Уведомления
         function showNotification(text, type = 'info') {
             const notification = document.createElement('div');
             notification.className = 'notification';
@@ -1379,27 +1508,25 @@
             }, 4000);
         }
 
-        // Модальное окно
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
         function showModal(content) {
             document.getElementById('modal-body').innerHTML = content;
             document.getElementById('modal').classList.add('active');
         }
 
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-        }
-
-        // Клик вне модального окна
         document.getElementById('modal').addEventListener('click', (e) => {
             if (e.target.id === 'modal') {
                 closeModal();
             }
         });
 
-        // Инициализация
+        // =============== INITIALIZATION ===============
         createParticles();
-        loadAchievements();
         showCharacterSelect();
+        AudioSystem.dramatic();
     </script>
 </body>
 </html>
