@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Succession: Битва за Waystar Royco</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid #d4af37;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
+        }
+
+        .game-title {
+            text-align: center;
+            font-size: 2.5em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            font-weight: bold;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: #c0c0c0;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #c0c0c0;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.8em;
+            color: #d4af37;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #2d2d44;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37 0%, #ffd700 100%);
+            transition: width 0.5s ease;
+        }
+
+        .story-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #d4af37;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+            min-height: 150px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .character-name {
+            color: #d4af37;
+            font-weight: bold;
+        }
+
+        .choices-container {
+            display: grid;
+            gap: 15px;
+        }
+
+        .choice-btn {
+            background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%);
+            border: 2px solid #d4af37;
+            color: #fff;
+            padding: 20px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choice-btn:hover {
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .choice-btn:active {
+            transform: translateY(0);
+        }
+
+        .choice-btn::before {
+            content: '▶';
+            position: absolute;
+            right: 20px;
+            font-size: 1.2em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .choice-btn:hover::before {
+            opacity: 1;
+        }
+
+        .game-over {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .game-over h2 {
+            font-size: 2.5em;
+            color: #d4af37;
+            margin-bottom: 20px;
+        }
+
+        .game-over p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            border: none;
+            color: #000;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 30px rgba(212, 175, 55, 0.7);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #d4af37;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 300px;
+            animation: slideIn 0.5s ease;
+            z-index: 1000;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .positive {
+            color: #4ade80;
+        }
+
+        .negative {
+            color: #f87171;
+        }
+
+        .character-image {
+            text-align: center;
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 1.8em;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="game-title">SUCCESSION</h1>
+        <p class="subtitle">Битва за Waystar Royco</p>
+
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-label">Власть</div>
+                <div class="stat-value" id="power">50</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="power-bar" style="width: 50%"></div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Лояльность</div>
+                <div class="stat-value" id="loyalty">50</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="loyalty-bar" style="width: 50%"></div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Репутация</div>
+                <div class="stat-value" id="reputation">50</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="reputation-bar" style="width: 50%"></div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Богатство</div>
+                <div class="stat-value" id="wealth">50</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="wealth-bar" style="width: 50%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-content">
+            <div class="story-box" id="story-text"></div>
+            <div class="choices-container" id="choices"></div>
+        </div>
+    </div>
+
+    <script>
+        // Состояние игры
+        let gameState = {
+            power: 50,
+            loyalty: 50,
+            reputation: 50,
+            wealth: 50,
+            currentScene: 0,
+            choices: []
+        };
+
+        // Сценарии игры
+        const scenarios = [
+            {
+                text: "🏢 Вы - один из наследников медиа-империи <span class='character-name'>Waystar Royco</span>. Ваш отец, Логан Рой, стареет, и борьба за трон становится все более ожесточенной. Сегодня утром вас вызвали на экстренное совещание совета директоров. Какой будет ваша стратегия?",
+                choices: [
+                    {
+                        text: "Прийти первым и подготовить союзников до начала совещания",
+                        effects: { power: 10, loyalty: 5, reputation: 5 },
+                        nextScene: 1
+                    },
+                    {
+                        text: "Появиться с опозданием, показав свое превосходство",
+                        effects: { power: 5, loyalty: -10, reputation: 10 },
+                        nextScene: 1
+                    },
+                    {
+                        text: "Провести тайную встречу с главным юристом компании",
+                        effects: { power: 15, loyalty: -5, wealth: 10 },
+                        nextScene: 1
+                    }
+                ]
+            },
+            {
+                text: "📰 На совещании обсуждается крупный скандал: один из ваших телеканалов опубликовал компрометирующую информацию о политике, который теперь грозит судом на миллиарды. <span class='character-name'>Логан</span> смотрит на вас, ожидая решения.",
+                choices: [
+                    {
+                        text: "Принести публичные извинения и уволить редактора",
+                        effects: { power: -10, loyalty: 10, reputation: -15, wealth: 5 },
+                        nextScene: 2
+                    },
+                    {
+                        text: "Защищать свободу прессы и готовиться к судебной битве",
+                        effects: { power: 15, loyalty: -5, reputation: 20, wealth: -15 },
+                        nextScene: 2
+                    },
+                    {
+                        text: "Предложить политику закулисную сделку",
+                        effects: { power: 20, loyalty: -10, reputation: -10, wealth: 10 },
+                        nextScene: 2
+                    }
+                ]
+            },
+            {
+                text: "💼 <span class='character-name'>Ваш брат/сестра</span> предлагает объединиться против отца, чтобы захватить контроль над компанией. Они обещают вам пост CEO, если вы поможете им собрать достаточно голосов в совете директоров. Это рискованный ход, но шанс может больше не представиться.",
+                choices: [
+                    {
+                        text: "Согласиться на альянс и начать переговоры с директорами",
+                        effects: { power: 25, loyalty: -20, reputation: -5, wealth: 15 },
+                        nextScene: 3
+                    },
+                    {
+                        text: "Отказаться и доложить отцу о заговоре",
+                        effects: { power: -10, loyalty: 25, reputation: 10, wealth: 10 },
+                        nextScene: 3
+                    },
+                    {
+                        text: "Сделать вид, что согласны, но играть на две стороны",
+                        effects: { power: 30, loyalty: -15, reputation: -10, wealth: 5 },
+                        nextScene: 3
+                    }
+                ]
+            },
+            {
+                text: "🎭 Крупнейший конкурент <span class='character-name'>Waystar Royco</span> предлагает слияние на выгодных условиях. Вы получите огромное влияние в новой компании, но это означает конец семейной империи Роев. <span class='character-name'>Логан</span> категорически против, но акционеры в восторге.",
+                choices: [
+                    {
+                        text: "Поддержать слияние и заработать миллиарды",
+                        effects: { power: -20, loyalty: -30, reputation: 15, wealth: 40 },
+                        nextScene: 4
+                    },
+                    {
+                        text: "Саботировать сделку в последний момент",
+                        effects: { power: 20, loyalty: 15, reputation: -20, wealth: -10 },
+                        nextScene: 4
+                    },
+                    {
+                        text: "Предложить контр-офер: поглотить конкурента",
+                        effects: { power: 35, loyalty: 10, reputation: 25, wealth: 20 },
+                        nextScene: 4
+                    }
+                ]
+            },
+            {
+                text: "👑 После серии интриг и сделок наступает решающий момент. <span class='character-name'>Логан Рой</span> объявляет о своей отставке и должен назвать преемника. Вся семья собралась в его кабинете. Напряжение достигло предела. Кто получит корону?",
+                choices: [
+                    {
+                        text: "Сделать страстную речь о том, почему именно вы достойны",
+                        effects: { power: 20, reputation: 15 },
+                        nextScene: 5
+                    },
+                    {
+                        text: "Показать Логану компромат на остальных наследников",
+                        effects: { power: 30, loyalty: -20, reputation: -15 },
+                        nextScene: 5
+                    },
+                    {
+                        text: "Неожиданно отказаться и создать свою медиа-империю",
+                        effects: { power: 15, reputation: 25, wealth: 30 },
+                        nextScene: 5
+                    }
+                ]
+            }
+        ];
+
+        // Обновление статистики
+        function updateStats() {
+            // Ограничение значений от 0 до 100
+            gameState.power = Math.max(0, Math.min(100, gameState.power));
+            gameState.loyalty = Math.max(0, Math.min(100, gameState.loyalty));
+            gameState.reputation = Math.max(0, Math.min(100, gameState.reputation));
+            gameState.wealth = Math.max(0, Math.min(100, gameState.wealth));
+
+            document.getElementById('power').textContent = gameState.power;
+            document.getElementById('loyalty').textContent = gameState.loyalty;
+            document.getElementById('reputation').textContent = gameState.reputation;
+            document.getElementById('wealth').textContent = gameState.wealth;
+
+            document.getElementById('power-bar').style.width = gameState.power + '%';
+            document.getElementById('loyalty-bar').style.width = gameState.loyalty + '%';
+            document.getElementById('reputation-bar').style.width = gameState.reputation + '%';
+            document.getElementById('wealth-bar').style.width = gameState.wealth + '%';
+        }
+
+        // Показать уведомление
+        function showNotification(text, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `<div class="${type}">${text}</div>`;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideIn 0.5s ease reverse';
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+
+        // Применить эффекты выбора
+        function applyEffects(effects) {
+            let messages = [];
+
+            for (let [stat, value] of Object.entries(effects)) {
+                gameState[stat] += value;
+                if (value > 0) {
+                    messages.push(`${stat.toUpperCase()}: +${value}`);
+                } else if (value < 0) {
+                    messages.push(`${stat.toUpperCase()}: ${value}`);
+                }
+            }
+
+            if (messages.length > 0) {
+                showNotification(messages.join('<br>'), 'positive');
+            }
+
+            updateStats();
+            checkGameOver();
+        }
+
+        // Проверка окончания игры
+        function checkGameOver() {
+            if (gameState.power <= 0) {
+                endGame('Поражение', 'Вы потеряли всю власть. Ваши соперники изгнали вас из компании. Может, в следующий раз вам повезет больше...');
+                return true;
+            }
+
+            if (gameState.loyalty <= 0) {
+                endGame('Предательство', 'Все союзники отвернулись от вас. Одиночество в мире бизнеса - это смерть.');
+                return true;
+            }
+
+            if (gameState.reputation <= 0) {
+                endGame('Позор', 'Ваша репутация уничтожена. СМИ называют вас худшим из Роев. Возвращения нет.');
+                return true;
+            }
+
+            if (gameState.currentScene >= scenarios.length - 1 && gameState.power >= 70) {
+                endGame('Победа!', `Поздравляем! Вы стали новым главой Waystar Royco!
+                    <br><br>Итоговые показатели:
+                    <br>Власть: ${gameState.power}
+                    <br>Лояльность: ${gameState.loyalty}
+                    <br>Репутация: ${gameState.reputation}
+                    <br>Богатство: ${gameState.wealth}`);
+                return true;
+            }
+
+            if (gameState.currentScene >= scenarios.length - 1) {
+                endGame('Неоднозначный финал', `Вы дошли до конца, но власть ускользнула из ваших рук. Логан выбрал другого преемника.
+                    <br><br>Итоговые показатели:
+                    <br>Власть: ${gameState.power}
+                    <br>Лояльность: ${gameState.loyalty}
+                    <br>Репутация: ${gameState.reputation}
+                    <br>Богатство: ${gameState.wealth}`);
+                return true;
+            }
+
+            return false;
+        }
+
+        // Конец игры
+        function endGame(title, message) {
+            document.getElementById('game-content').innerHTML = `
+                <div class="game-over">
+                    <div class="character-image">${title.includes('Победа') ? '👑' : '💔'}</div>
+                    <h2>${title}</h2>
+                    <p>${message}</p>
+                    <button class="restart-btn" onclick="restartGame()">Начать заново</button>
+                </div>
+            `;
+        }
+
+        // Перезапуск игры
+        function restartGame() {
+            gameState = {
+                power: 50,
+                loyalty: 50,
+                reputation: 50,
+                wealth: 50,
+                currentScene: 0,
+                choices: []
+            };
+            updateStats();
+            loadScene(0);
+        }
+
+        // Загрузка сцены
+        function loadScene(sceneIndex) {
+            if (sceneIndex >= scenarios.length) {
+                checkGameOver();
+                return;
+            }
+
+            gameState.currentScene = sceneIndex;
+            const scene = scenarios[sceneIndex];
+
+            document.getElementById('story-text').innerHTML = scene.text;
+
+            const choicesContainer = document.getElementById('choices');
+            choicesContainer.innerHTML = '';
+
+            scene.choices.forEach((choice, index) => {
+                const button = document.createElement('button');
+                button.className = 'choice-btn';
+                button.innerHTML = choice.text;
+                button.onclick = () => makeChoice(choice);
+                choicesContainer.appendChild(button);
+            });
+        }
+
+        // Сделать выбор
+        function makeChoice(choice) {
+            gameState.choices.push(choice.text);
+            applyEffects(choice.effects);
+
+            if (!checkGameOver()) {
+                setTimeout(() => {
+                    loadScene(choice.nextScene);
+                }, 500);
+            }
+        }
+
+        // Запуск игры
+        updateStats();
+        loadScene(0);
+    </script>
+</body>
+</html>
