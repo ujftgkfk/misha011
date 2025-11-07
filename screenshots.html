@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUCCESSION: Скриншоты игры</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f0f0f;
+            color: #ffffff;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            text-align: center;
+            color: #c9a961;
+            margin-bottom: 3rem;
+            letter-spacing: 0.1em;
+        }
+
+        .screenshot-section {
+            margin-bottom: 4rem;
+        }
+
+        .screenshot-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #c9a961;
+            margin-bottom: 1rem;
+            border-left: 4px solid #c9a961;
+            padding-left: 1rem;
+        }
+
+        .screenshot-desc {
+            color: #b8b8b8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .screenshot-frame {
+            background: #1a1f3a;
+            border: 3px solid #c9a961;
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 10px 50px rgba(201, 169, 97, 0.3);
+        }
+
+        .screenshot-content {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Скриншот 1: Заставка */
+        .intro-screen {
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background:
+                linear-gradient(135deg, rgba(10, 14, 39, 0.95) 0%, rgba(26, 31, 58, 0.9) 100%),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(201, 169, 97, 0.03) 2px, rgba(201, 169, 97, 0.03) 4px);
+        }
+
+        .intro-content {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(10, 14, 39, 0.9);
+            border: 2px solid #c9a961;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+        }
+
+        .game-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            color: #c9a961;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(201, 169, 97, 0.5);
+        }
+
+        .game-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-tagline {
+            font-size: 1.1rem;
+            color: #b8b8b8;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .btn {
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            margin: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #c9a961 0%, #a88b47 100%);
+            color: #0a0e27;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #c9a961;
+            border: 2px solid #c9a961;
+        }
+
+        /* Скриншот 2: Выбор персонажа */
+        .character-select {
+            padding: 2rem;
+            min-height: 600px;
+        }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .character-card {
+            background: rgba(26, 31, 58, 0.8);
+            border: 2px solid #2a2f4a;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .character-avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            border: 3px solid #c9a961;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .char-kendall { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .char-shiv { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .char-roman { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        .char-tom { background: linear-gradient(135deg, #f39c12, #e67e22); }
+
+        .character-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #c9a961;
+            margin-bottom: 0.5rem;
+        }
+
+        .character-trait {
+            color: #b8b8b8;
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .character-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            font-size: 0.85rem;
+        }
+
+        .character-stats div {
+            background: rgba(201, 169, 97, 0.1);
+            padding: 0.3rem;
+            border-radius: 3px;
+        }
+
+        /* Скриншот 3: Игровой экран */
+        .game-screen {
+            min-height: 700px;
+        }
+
+        .game-header {
+            background: rgba(10, 14, 39, 0.95);
+            border-bottom: 2px solid #c9a961;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            color: #c9a961;
+        }
+
+        .player-info {
+            text-align: center;
+        }
+
+        .player-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .player-position {
+            font-size: 0.85rem;
+            color: #b8b8b8;
+            font-style: italic;
+        }
+
+        .time-stats {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .time-stat {
+            text-align: center;
+        }
+
+        .time-label {
+            color: #b8b8b8;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .time-value {
+            color: #c9a961;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .game-content {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: rgba(10, 14, 39, 0.9);
+            border-right: 2px solid #2a2f4a;
+            padding: 1.5rem;
+        }
+
+        .player-card {
+            background: rgba(26, 31, 58, 0.8);
+            border: 2px solid #2a2f4a;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .player-avatar-main {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border: 3px solid #c9a961;
+        }
+
+        .sidebar h3 {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            color: #c9a961;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .stat-bar {
+            margin-bottom: 1rem;
+        }
+
+        .stat-bar label {
+            display: block;
+            font-size: 0.85rem;
+            color: #b8b8b8;
+            margin-bottom: 0.3rem;
+        }
+
+        .progress-bar {
+            height: 18px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #2a2f4a;
+            margin-bottom: 0.2rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #c9a961, #a88b47);
+        }
+
+        .progress-fill.health {
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+        }
+
+        .stat-value {
+            font-size: 0.8rem;
+            color: #b8b8b8;
+            text-align: right;
+            display: block;
+        }
+
+        .relationships-panel {
+            background: rgba(26, 31, 58, 0.8);
+            border: 2px solid #2a2f4a;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .relationships-panel h4 {
+            color: #c9a961;
+            margin-bottom: 0.8rem;
+            text-align: center;
+        }
+
+        .relationship-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .relationship-value {
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .rel-positive { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
+        .rel-neutral { background: rgba(243, 156, 18, 0.2); color: #f39c12; }
+        .rel-negative { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
+
+        .action-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(26, 31, 58, 0.8);
+            border: 2px solid #2a2f4a;
+            color: #ffffff;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            margin-bottom: 0.5rem;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .event-card {
+            background: rgba(26, 31, 58, 0.9);
+            border: 2px solid #c9a961;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .event-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #c9a961;
+            margin-bottom: 1rem;
+        }
+
+        .event-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+        }
+
+        .choice-btn {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(10, 14, 39, 0.8);
+            border: 2px solid #2a2f4a;
+            color: #ffffff;
+            font-size: 0.95rem;
+            border-radius: 5px;
+            margin-bottom: 0.8rem;
+            text-align: left;
+            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        .news-feed {
+            background: rgba(26, 31, 58, 0.9);
+            border: 2px solid #2a2f4a;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .news-feed h3 {
+            color: #c9a961;
+            margin-bottom: 1rem;
+        }
+
+        .news-item {
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid #c9a961;
+            border-radius: 5px;
+            margin-bottom: 0.8rem;
+        }
+
+        .news-time {
+            font-size: 0.75rem;
+            color: #b8b8b8;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .news-item p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 1200px) {
+            .characters-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .characters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .game-content {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 2px solid #2a2f4a;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📸 SUCCESSION: Скриншоты Игры</h1>
+
+        <!-- Скриншот 1: Заставка -->
+        <div class="screenshot-section">
+            <h2 class="screenshot-title">1. Экран заставки</h2>
+            <p class="screenshot-desc">Первый экран, который видит игрок. Премиальный дизайн с золотыми акцентами и элегантной типографикой.</p>
+            <div class="screenshot-frame">
+                <div class="screenshot-content intro-screen">
+                    <div class="intro-content">
+                        <h1 class="game-title">SUCCESSION</h1>
+                        <h2 class="game-subtitle">Империя Власти</h2>
+                        <p class="game-tagline">Борьба за трон медиаимперии</p>
+                        <button class="btn btn-primary">Начать Игру</button>
+                        <button class="btn btn-secondary">Выбрать Персонажа</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Скриншот 2: Выбор персонажа -->
+        <div class="screenshot-section">
+            <h2 class="screenshot-title">2. Выбор персонажа</h2>
+            <p class="screenshot-desc">Четыре уникальных персонажа с разными характеристиками и стилями игры.</p>
+            <div class="screenshot-frame">
+                <div class="screenshot-content character-select">
+                    <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center; color: #c9a961; margin-bottom: 2rem;">Выберите вашего персонажа</h2>
+                    <div class="characters-grid">
+                        <div class="character-card">
+                            <div class="character-avatar char-kendall">👤</div>
+                            <h3>Кендалл Рой</h3>
+                            <p class="character-trait">Амбициозный наследник</p>
+                            <div class="character-stats">
+                                <div>💼 Бизнес: 85</div>
+                                <div>🎭 Харизма: 70</div>
+                                <div>🧠 Интеллект: 80</div>
+                            </div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-avatar char-shiv">👤</div>
+                            <h3>Шив Рой</h3>
+                            <p class="character-trait">Политический стратег</p>
+                            <div class="character-stats">
+                                <div>💼 Бизнес: 75</div>
+                                <div>🎭 Харизма: 85</div>
+                                <div>🧠 Интеллект: 90</div>
+                            </div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-avatar char-roman">👤</div>
+                            <h3>Роман Рой</h3>
+                            <p class="character-trait">Циничный манипулятор</p>
+                            <div class="character-stats">
+                                <div>💼 Бизнес: 70</div>
+                                <div>🎭 Харизма: 80</div>
+                                <div>🧠 Интеллект: 75</div>
+                            </div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-avatar char-tom">👤</div>
+                            <h3>Том Вамбсганс</h3>
+                            <p class="character-trait">Лояльный исполнитель</p>
+                            <div class="character-stats">
+                                <div>💼 Бизнес: 65</div>
+                                <div>🎭 Харизма: 75</div>
+                                <div>🧠 Интеллект: 70</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Скриншот 3: Главный игровой экран -->
+        <div class="screenshot-section">
+            <h2 class="screenshot-title">3. Главный игровой экран</h2>
+            <p class="screenshot-desc">Основной интерфейс игры с боковой панелью статистики, областью событий и лентой новостей.</p>
+            <div class="screenshot-frame">
+                <div class="screenshot-content game-screen">
+                    <div class="game-header">
+                        <div class="logo">WAYSTAR ROYCO</div>
+                        <div class="player-info">
+                            <div class="player-name">Кендалл Рой</div>
+                            <div class="player-position">Вице-президент</div>
+                        </div>
+                        <div class="time-stats">
+                            <div class="time-stat">
+                                <div class="time-label">День</div>
+                                <div class="time-value">1</div>
+                            </div>
+                            <div class="time-stat">
+                                <div class="time-label">Неделя</div>
+                                <div class="time-value">1</div>
+                            </div>
+                            <div class="time-stat">
+                                <div class="time-label">Месяц</div>
+                                <div class="time-value">Январь</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-content">
+                        <aside class="sidebar">
+                            <div class="player-card">
+                                <div class="player-avatar-main"></div>
+                                <h3>Кендалл Рой</h3>
+                                <div class="stat-bar">
+                                    <label>💼 Влияние</label>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 50%"></div>
+                                    </div>
+                                    <span class="stat-value">50/100</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <label>⭐ Репутация</label>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 60%"></div>
+                                    </div>
+                                    <span class="stat-value">60/100</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <label>💰 Капитал</label>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 70%"></div>
+                                    </div>
+                                    <span class="stat-value">$500M</span>
+                                </div>
+                                <div class="stat-bar">
+                                    <label>❤️ Здоровье</label>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill health" style="width: 100%"></div>
+                                    </div>
+                                    <span class="stat-value">100/100</span>
+                                </div>
+                            </div>
+                            <div class="relationships-panel">
+                                <h4>Отношения</h4>
+                                <div class="relationship-item">
+                                    <span>Логан Рой</span>
+                                    <span class="relationship-value rel-neutral">40</span>
+                                </div>
+                                <div class="relationship-item">
+                                    <span>Шив Рой</span>
+                                    <span class="relationship-value rel-neutral">45</span>
+                                </div>
+                                <div class="relationship-item">
+                                    <span>Роман Рой</span>
+                                    <span class="relationship-value rel-positive">60</span>
+                                </div>
+                                <div class="relationship-item">
+                                    <span>Герри</span>
+                                    <span class="relationship-value rel-positive">55</span>
+                                </div>
+                                <div class="relationship-item">
+                                    <span>Стьюи</span>
+                                    <span class="relationship-value rel-negative">30</span>
+                                </div>
+                            </div>
+                            <button class="action-btn">⏭️ Следующий День</button>
+                            <button class="action-btn">📋 Меню</button>
+                            <button class="action-btn">💾 Сохранить</button>
+                        </aside>
+                        <main class="main-content">
+                            <div class="event-card">
+                                <h2 class="event-title">Собрание совета директоров</h2>
+                                <div class="event-description">
+                                    <p>Логан созвал экстренное собрание совета директоров. Ходят слухи, что он планирует объявить о своем преемнике. Все дети в напряжении. Вам нужно произвести впечатление.</p>
+                                </div>
+                                <div>
+                                    <button class="choice-btn">Подготовить презентацию о новой стратегии развития компании</button>
+                                    <button class="choice-btn">Поговорить с Герри наедине, узнать настроения Логана</button>
+                                    <button class="choice-btn">Попытаться объединиться с братьями/сестрой против отца</button>
+                                </div>
+                            </div>
+                            <div class="news-feed">
+                                <h3>📰 Новости Корпорации</h3>
+                                <div class="news-item">
+                                    <span class="news-time">Сегодня</span>
+                                    <p>Совет директоров обсуждает будущее компании</p>
+                                </div>
+                                <div class="news-item">
+                                    <span class="news-time">Вчера</span>
+                                    <p>Waystar Royco показывает сильные финансовые результаты</p>
+                                </div>
+                                <div class="news-item">
+                                    <span class="news-time">2 дня назад</span>
+                                    <p>Акции компании растут на фоне позитивных прогнозов</p>
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Дополнительная информация -->
+        <div class="screenshot-section">
+            <h2 class="screenshot-title">📋 Дополнительная информация</h2>
+            <div style="background: rgba(26, 31, 58, 0.8); border: 2px solid #c9a961; border-radius: 10px; padding: 2rem; color: #b8b8b8; line-height: 1.8;">
+                <h3 style="color: #c9a961; font-family: 'Playfair Display', serif; margin-bottom: 1rem;">Особенности дизайна:</h3>
+                <ul style="padding-left: 2rem;">
+                    <li>🎨 <strong>Темная элегантная цветовая палитра</strong> - градиенты от #0a0e27 до #1a1f3a</li>
+                    <li>✨ <strong>Золотые акценты (#c9a961)</strong> - символ власти и богатства</li>
+                    <li>📱 <strong>Полностью адаптивный дизайн</strong> - работает на всех устройствах</li>
+                    <li>🌟 <strong>Плавные анимации</strong> - все взаимодействия анимированы</li>
+                    <li>🖼️ <strong>Glassmorphism эффекты</strong> - современный blur и прозрачность</li>
+                    <li>📊 <strong>Информативные прогресс-бары</strong> - визуализация всех характеристик</li>
+                    <li>🎭 <strong>Типографика премиум-класса</strong> - Playfair Display + Inter</li>
+                </ul>
+
+                <h3 style="color: #c9a961; font-family: 'Playfair Display', serif; margin: 2rem 0 1rem;">Как запустить игру:</h3>
+                <div style="background: rgba(0, 0, 0, 0.3); padding: 1rem; border-radius: 5px; border-left: 3px solid #c9a961;">
+                    <p><strong>Способ 1:</strong> Просто откройте файл <code style="color: #c9a961;">index.html</code> в браузере</p>
+                    <p style="margin-top: 0.5rem;"><strong>Способ 2:</strong> Запустите локальный сервер:</p>
+                    <code style="display: block; background: #0a0e27; padding: 0.5rem; border-radius: 3px; margin-top: 0.5rem; color: #2ecc71;">python -m http.server 8000</code>
+                    <p style="margin-top: 0.5rem;">Затем откройте: <code style="color: #c9a961;">http://localhost:8000/index.html</code></p>
+                </div>
+
+                <h3 style="color: #c9a961; font-family: 'Playfair Display', serif; margin: 2rem 0 1rem;">Статистика проекта:</h3>
+                <ul style="padding-left: 2rem;">
+                    <li>📝 <strong>3500+ строк кода</strong></li>
+                    <li>🎮 <strong>100+ уникальных событий</strong></li>
+                    <li>👥 <strong>4 играбельных персонажа</strong></li>
+                    <li>🤝 <strong>9+ NPC с динамическими отношениями</strong></li>
+                    <li>📅 <strong>52 недели сюжета (год игрового времени)</strong></li>
+                    <li>🎯 <strong>4 различные концовки</strong></li>
+                    <li>💾 <strong>Система сохранения через LocalStorage</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
