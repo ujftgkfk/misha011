@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUCCESSION: Империя Власти</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Заставка игры -->
+        <div id="intro-screen" class="screen active">
+            <div class="intro-content">
+                <h1 class="game-title">SUCCESSION</h1>
+                <h2 class="game-subtitle">Империя Власти</h2>
+                <p class="game-tagline">Борьба за трон медиаимперии</p>
+                <button class="btn-primary" onclick="startGame()">Начать Игру</button>
+                <button class="btn-secondary" onclick="showCharacterSelect()">Выбрать Персонажа</button>
+            </div>
+            <div class="intro-bg"></div>
+        </div>
+
+        <!-- Выбор персонажа -->
+        <div id="character-select" class="screen">
+            <div class="character-select-content">
+                <h2 class="section-title">Выберите вашего персонажа</h2>
+                <div class="characters-grid">
+                    <div class="character-card" onclick="selectCharacter('kendall')">
+                        <div class="character-image kendall"></div>
+                        <h3>Кендалл Рой</h3>
+                        <p class="character-trait">Амбициозный наследник</p>
+                        <div class="character-stats">
+                            <span>💼 Бизнес: 85</span>
+                            <span>🎭 Харизма: 70</span>
+                            <span>🧠 Интеллект: 80</span>
+                        </div>
+                    </div>
+                    <div class="character-card" onclick="selectCharacter('shiv')">
+                        <div class="character-image shiv"></div>
+                        <h3>Шив Рой</h3>
+                        <p class="character-trait">Политический стратег</p>
+                        <div class="character-stats">
+                            <span>💼 Бизнес: 75</span>
+                            <span>🎭 Харизма: 85</span>
+                            <span>🧠 Интеллект: 90</span>
+                        </div>
+                    </div>
+                    <div class="character-card" onclick="selectCharacter('roman')">
+                        <div class="character-image roman"></div>
+                        <h3>Роман Рой</h3>
+                        <p class="character-trait">Циничный манипулятор</p>
+                        <div class="character-stats">
+                            <span>💼 Бизнес: 70</span>
+                            <span>🎭 Харизма: 80</span>
+                            <span>🧠 Интеллект: 75</span>
+                        </div>
+                    </div>
+                    <div class="character-card" onclick="selectCharacter('tom')">
+                        <div class="character-image tom"></div>
+                        <h3>Том Вамбсганс</h3>
+                        <p class="character-trait">Лояльный исполнитель</p>
+                        <div class="character-stats">
+                            <span>💼 Бизнес: 65</span>
+                            <span>🎭 Харизма: 75</span>
+                            <span>🧠 Интеллект: 70</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-secondary" onclick="showIntro()">Назад</button>
+            </div>
+        </div>
+
+        <!-- Главный экран игры -->
+        <div id="game-screen" class="screen">
+            <!-- Верхняя панель -->
+            <header class="game-header">
+                <div class="logo">WAYSTAR ROYCO</div>
+                <div class="player-info">
+                    <span class="player-name" id="player-name">Кендалл Рой</span>
+                    <span class="player-position" id="player-position">Вице-президент</span>
+                </div>
+                <div class="game-stats">
+                    <div class="stat">
+                        <span class="stat-label">День:</span>
+                        <span class="stat-value" id="current-day">1</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Неделя:</span>
+                        <span class="stat-value" id="current-week">1</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Месяц:</span>
+                        <span class="stat-value" id="current-month">Январь</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Основной контент -->
+            <div class="game-content">
+                <!-- Боковая панель -->
+                <aside class="sidebar">
+                    <div class="player-card">
+                        <div class="player-avatar" id="player-avatar"></div>
+                        <h3 id="sidebar-name">Кендалл Рой</h3>
+                        <div class="player-stats">
+                            <div class="stat-bar">
+                                <label>💼 Влияние</label>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="influence-bar" style="width: 50%"></div>
+                                </div>
+                                <span id="influence-value">50/100</span>
+                            </div>
+                            <div class="stat-bar">
+                                <label>⭐ Репутация</label>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="reputation-bar" style="width: 60%"></div>
+                                </div>
+                                <span id="reputation-value">60/100</span>
+                            </div>
+                            <div class="stat-bar">
+                                <label>💰 Капитал</label>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="wealth-bar" style="width: 70%"></div>
+                                </div>
+                                <span id="wealth-value">$500M</span>
+                            </div>
+                            <div class="stat-bar">
+                                <label>❤️ Здоровье</label>
+                                <div class="progress-bar">
+                                    <div class="progress-fill health" id="health-bar" style="width: 100%"></div>
+                                </div>
+                                <span id="health-value">100/100</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relationships-panel">
+                        <h4>Отношения</h4>
+                        <div id="relationships-list"></div>
+                    </div>
+
+                    <div class="actions-panel">
+                        <button class="action-btn" onclick="advanceTime()">⏭️ Следующий День</button>
+                        <button class="action-btn" onclick="showMenu()">📋 Меню</button>
+                        <button class="action-btn" onclick="saveGame()">💾 Сохранить</button>
+                    </div>
+                </aside>
+
+                <!-- Главная область -->
+                <main class="main-content">
+                    <div class="event-container">
+                        <div id="current-event" class="event-card">
+                            <h2 class="event-title">Добро пожаловать в Waystar Royco</h2>
+                            <div class="event-description">
+                                <p>Вы начинаете свой путь к вершине медиаимперии. Впереди вас ждут интриги, предательства, альянсы и борьба за власть.</p>
+                                <p>Ваша цель - стать следующим CEO Waystar Royco. Используйте все доступные средства: манипуляции, деловую хватку, связи и хитрость.</p>
+                            </div>
+                            <div class="event-choices" id="event-choices">
+                                <button class="choice-btn" onclick="advanceTime()">Начать первый день</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="news-feed">
+                        <h3>📰 Новости Корпорации</h3>
+                        <div id="news-list" class="news-list">
+                            <div class="news-item">
+                                <span class="news-time">Сегодня</span>
+                                <p>Совет директоров обсуждает будущее компании</p>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- Модальное окно меню -->
+        <div id="menu-modal" class="modal">
+            <div class="modal-content">
+                <h2>Меню</h2>
+                <button class="btn-primary" onclick="closeMenu()">Продолжить игру</button>
+                <button class="btn-secondary" onclick="saveGame()">Сохранить игру</button>
+                <button class="btn-secondary" onclick="loadGame()">Загрузить игру</button>
+                <button class="btn-secondary" onclick="restartGame()">Начать заново</button>
+                <button class="btn-secondary" onclick="closeMenu()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="characters.js"></script>
+    <script src="events.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
