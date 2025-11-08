@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина - TechStore</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <h1>🛒 TechStore</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="products.html">Товары</a></li>
+                    <li><a href="cart.html" class="active">Корзина (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="contact.html">Контакты</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Корзина покупок</h1>
+            </div>
+        </section>
+
+        <section class="cart-section">
+            <div class="container">
+                <div id="cart-items" class="cart-items">
+                    <!-- Cart items will be loaded here by JavaScript -->
+                </div>
+
+                <div id="empty-cart" class="empty-cart" style="display: none;">
+                    <p>Ваша корзина пуста</p>
+                    <a href="products.html" class="btn btn-primary">Перейти к покупкам</a>
+                </div>
+
+                <div id="cart-summary" class="cart-summary" style="display: none;">
+                    <div class="summary-content">
+                        <h2>Итого</h2>
+                        <div class="summary-row">
+                            <span>Товары:</span>
+                            <span id="items-count">0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Сумма:</span>
+                            <span id="subtotal">0 ₽</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Доставка:</span>
+                            <span id="delivery">Бесплатно</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span><strong>Итого:</strong></span>
+                            <span id="total"><strong>0 ₽</strong></span>
+                        </div>
+                        <button class="btn btn-primary btn-block" onclick="checkout()">Оформить заказ</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>О компании</h3>
+                    <p>TechStore - ваш надежный партнер в мире электроники</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Email: info@techstore.ru</p>
+                    <p>Телефон: +7 (800) 555-35-35</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Режим работы</h3>
+                    <p>Пн-Пт: 9:00 - 20:00</p>
+                    <p>Сб-Вс: 10:00 - 18:00</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TechStore. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
