@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>🛍️ Мой Магазин</h1>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒 Корзина <span id="cart-count" class="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="container">
+        <!-- Боковая панель с фильтрами -->
+        <aside class="sidebar">
+            <h2>Фильтры</h2>
+
+            <div class="filter-section">
+                <h3>Категории</h3>
+                <div class="filter-options">
+                    <label>
+                        <input type="checkbox" name="category" value="all" checked onchange="filterProducts()">
+                        Все товары
+                    </label>
+                    <label>
+                        <input type="checkbox" name="category" value="electronics" onchange="filterProducts()">
+                        Электроника
+                    </label>
+                    <label>
+                        <input type="checkbox" name="category" value="clothing" onchange="filterProducts()">
+                        Одежда
+                    </label>
+                    <label>
+                        <input type="checkbox" name="category" value="books" onchange="filterProducts()">
+                        Книги
+                    </label>
+                    <label>
+                        <input type="checkbox" name="category" value="home" onchange="filterProducts()">
+                        Для дома
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Цена</h3>
+                <div class="price-range">
+                    <input type="number" id="min-price" placeholder="От" onchange="filterProducts()">
+                    <input type="number" id="max-price" placeholder="До" onchange="filterProducts()">
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Сортировка</h3>
+                <select id="sort-select" onchange="sortProducts()">
+                    <option value="default">По умолчанию</option>
+                    <option value="price-asc">Цена: по возрастанию</option>
+                    <option value="price-desc">Цена: по убыванию</option>
+                    <option value="name-asc">Название: А-Я</option>
+                    <option value="name-desc">Название: Я-А</option>
+                </select>
+            </div>
+        </aside>
+
+        <!-- Каталог товаров -->
+        <section class="products-section">
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="🔍 Поиск товаров..." onkeyup="filterProducts()">
+            </div>
+
+            <div id="products-grid" class="products-grid">
+                <!-- Товары будут загружены через JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Корзина (модальное окно) -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Корзина</h2>
+                <button class="close-btn" onclick="toggleCart()">✕</button>
+            </div>
+
+            <div id="cart-items" class="cart-items">
+                <!-- Товары в корзине -->
+            </div>
+
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <strong>Итого:</strong>
+                    <span id="cart-total">0 ₽</span>
+                </div>
+                <button class="checkout-btn" onclick="checkout()">Оформить заказ</button>
+                <button class="clear-cart-btn" onclick="clearCart()">Очистить корзину</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Уведомления -->
+    <div id="notification" class="notification"></div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Мой Магазин. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

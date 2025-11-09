@@ -1,0 +1,16 @@
+{
+  "name": "online-shop",
+  "version": "1.0.0",
+  "description": "Интернет-магазин с корзиной и каталогом товаров",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8080"
+  },
+  "keywords": [
+    "shop",
+    "ecommerce",
+    "online-store"
+  ],
+  "author": "",
+  "license": "MIT"
+}
