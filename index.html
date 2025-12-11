@@ -12,11 +12,17 @@
     <div id="game-container">
         <!-- Header -->
         <header class="game-header">
-            <h1>MEDIA MOGUL: The Warner Bros. War</h1>
-            <div class="game-timer">
-                <span id="current-date">September 1, 2025</span>
-                <span class="separator">|</span>
-                <span id="days-remaining">Days to deadline: <strong>120</strong></span>
+            <h1 data-i18n="gameTitle">MEDIA MOGUL: The Warner Bros. War</h1>
+            <div class="header-controls">
+                <div class="language-switcher">
+                    <button class="lang-btn" id="lang-en" data-lang="en">EN</button>
+                    <button class="lang-btn active" id="lang-ru" data-lang="ru">RU</button>
+                </div>
+                <div class="game-timer">
+                    <span id="current-date">September 1, 2025</span>
+                    <span class="separator">|</span>
+                    <span id="days-remaining"><span data-i18n="daysToDeadline">Days to deadline</span>: <strong>120</strong></span>
+                </div>
             </div>
         </header>
 
@@ -30,25 +36,25 @@
                 </div>
 
                 <div class="resources-panel">
-                    <h3>Resources</h3>
+                    <h3 data-i18n="resources">Resources</h3>
                     <div class="resource-item">
                         <span class="resource-icon">💰</span>
                         <div class="resource-details">
-                            <span class="resource-label">Cash</span>
+                            <span class="resource-label" data-i18n="cash">Cash</span>
                             <span class="resource-value" id="cash-value">$40.7B</span>
                         </div>
                     </div>
                     <div class="resource-item">
                         <span class="resource-icon">📊</span>
                         <div class="resource-details">
-                            <span class="resource-label">Stock Value</span>
+                            <span class="resource-label" data-i18n="stockValue">Stock Value</span>
                             <span class="resource-value" id="stock-value">N/A</span>
                         </div>
                     </div>
                     <div class="resource-item">
                         <span class="resource-icon">🏛️</span>
                         <div class="resource-details">
-                            <span class="resource-label">Political Influence</span>
+                            <span class="resource-label" data-i18n="politicalInfluence">Political Influence</span>
                             <div class="progress-bar">
                                 <div class="progress-fill" id="influence-bar" style="width: 75%"></div>
                             </div>
@@ -58,7 +64,7 @@
                     <div class="resource-item">
                         <span class="resource-icon">⭐</span>
                         <div class="resource-details">
-                            <span class="resource-label">Reputation</span>
+                            <span class="resource-label" data-i18n="reputation">Reputation</span>
                             <div class="progress-bar">
                                 <div class="progress-fill reputation" id="reputation-bar" style="width: 60%"></div>
                             </div>
@@ -68,13 +74,13 @@
                 </div>
 
                 <div class="bid-status">
-                    <h3>Current Bid Status</h3>
+                    <h3 data-i18n="bidStatus">Current Bid Status</h3>
                     <div class="your-bid">
-                        <span class="label">Your Offer:</span>
+                        <span class="label" data-i18n="yourOffer">Your Offer:</span>
                         <span class="value" id="your-bid">$30.00/share</span>
                     </div>
                     <div class="competitors-list">
-                        <h4>Competitors:</h4>
+                        <h4 data-i18n="competitors">Competitors:</h4>
                         <div class="competitor-item netflix">
                             <span class="name">Netflix</span>
                             <span class="bid">$27.75/share</span>
@@ -82,7 +88,7 @@
                         </div>
                         <div class="competitor-item comcast">
                             <span class="name">Comcast</span>
-                            <span class="bid">Withdrawn</span>
+                            <span class="bid" data-i18n="withdrawn">Withdrawn</span>
                             <span class="status inactive">❌</span>
                         </div>
                     </div>
@@ -93,37 +99,37 @@
             <main class="main-content">
                 <!-- Action Buttons -->
                 <div class="action-bar">
-                    <button class="btn-primary" id="btn-negotiate">Negotiate</button>
-                    <button class="btn-primary" id="btn-finance">Finance</button>
-                    <button class="btn-primary" id="btn-politics">Politics</button>
-                    <button class="btn-primary" id="btn-shareholders">Shareholders</button>
-                    <button class="btn-secondary" id="btn-next-turn">Next Day →</button>
+                    <button class="btn-primary" id="btn-negotiate" data-i18n="negotiate">Negotiate</button>
+                    <button class="btn-primary" id="btn-finance" data-i18n="finance">Finance</button>
+                    <button class="btn-primary" id="btn-politics" data-i18n="politics">Politics</button>
+                    <button class="btn-primary" id="btn-shareholders" data-i18n="shareholders">Shareholders</button>
+                    <button class="btn-secondary" id="btn-next-turn"><span data-i18n="nextDay">Next Day</span> →</button>
                 </div>
 
                 <!-- Main Display Panel -->
                 <div class="display-panel" id="main-display">
                     <div class="welcome-screen">
-                        <h2>Welcome to Media Mogul</h2>
-                        <p>September 2025. Warner Bros. Discovery is up for sale.</p>
-                        <p>As CEO of <strong id="welcome-company">Paramount Skydance</strong>, you must outbid Netflix and Comcast to secure the deal of the century.</p>
-                        <p>Use your resources wisely:</p>
+                        <h2 data-i18n="welcomeTitle">Welcome to Media Mogul</h2>
+                        <p data-i18n="welcomeText1">September 2025. Warner Bros. Discovery is up for sale.</p>
+                        <p><span data-i18n-template="welcomeText2" data-company="Paramount Skydance">As CEO of <strong id="welcome-company">Paramount Skydance</strong>, you must outbid Netflix and Comcast to secure the deal of the century.</span></p>
+                        <p data-i18n="welcomeText3">Use your resources wisely:</p>
                         <ul>
-                            <li>💰 Cash - Make competitive offers</li>
-                            <li>🏛️ Political Influence - Lobby regulators and Trump</li>
-                            <li>⭐ Reputation - Win over shareholders and the board</li>
+                            <li>💰 <span data-i18n="welcomeList1">Cash - Make competitive offers</span></li>
+                            <li>🏛️ <span data-i18n="welcomeList2">Political Influence - Lobby regulators and Trump</span></li>
+                            <li>⭐ <span data-i18n="welcomeList3">Reputation - Win over shareholders and the board</span></li>
                         </ul>
-                        <p>You have 120 days until the final deadline.</p>
-                        <button class="btn-large btn-primary" id="btn-start-game">Start Game</button>
+                        <p data-i18n="welcomeText4">You have 120 days until the final deadline.</p>
+                        <button class="btn-large btn-primary" id="btn-start-game" data-i18n="startGame">Start Game</button>
                     </div>
                 </div>
 
                 <!-- Event Log -->
                 <div class="event-log">
-                    <h3>Recent Events</h3>
+                    <h3 data-i18n="recentEvents">Recent Events</h3>
                     <div class="event-list" id="event-list">
                         <div class="event-item neutral">
-                            <span class="event-time">Day 1</span>
-                            <span class="event-text">Game started. The auction for Warner Bros. Discovery has begun.</span>
+                            <span class="event-time"><span data-i18n="day">Day</span> 1</span>
+                            <span class="event-text" data-i18n="gameStarted">Game started. The battle for Warner Bros. Discovery begins!</span>
                         </div>
                     </div>
                 </div>
@@ -132,14 +138,14 @@
             <!-- Right Sidebar - NPCs & Intel -->
             <aside class="sidebar-right">
                 <div class="npc-panel">
-                    <h3>Key People</h3>
+                    <h3 data-i18n="keyPeople">Key People</h3>
                     <div class="npc-list" id="npc-list">
                         <div class="npc-item" data-npc="zaslav">
                             <div class="npc-portrait">DZ</div>
                             <div class="npc-info">
                                 <div class="npc-name">David Zaslav</div>
-                                <div class="npc-title">CEO, WBD</div>
-                                <div class="npc-mood">😐 Neutral</div>
+                                <div class="npc-title" data-i18n="ceo_wbd">CEO, WBD</div>
+                                <div class="npc-mood">😐 <span data-i18n="neutral">Neutral</span></div>
                                 <div class="npc-relationship">
                                     <div class="relationship-bar">
                                         <div class="relationship-fill" style="width: 45%"></div>
@@ -153,8 +159,8 @@
                             <div class="npc-portrait">DT</div>
                             <div class="npc-info">
                                 <div class="npc-name">Donald Trump</div>
-                                <div class="npc-title">President</div>
-                                <div class="npc-mood">🤔 Watching</div>
+                                <div class="npc-title" data-i18n="president">President</div>
+                                <div class="npc-mood">🤔 <span data-i18n="watching">Watching</span></div>
                                 <div class="npc-relationship">
                                     <div class="relationship-bar">
                                         <div class="relationship-fill" style="width: 60%"></div>
@@ -167,7 +173,7 @@
                 </div>
 
                 <div class="intel-panel">
-                    <h3>Intelligence</h3>
+                    <h3 data-i18n="intelligence">Intelligence</h3>
                     <div class="intel-list" id="intel-list">
                         <div class="intel-item">
                             <span class="intel-icon">📰</span>
@@ -206,6 +212,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="js/i18n.js"></script>
     <script src="js/data.js"></script>
     <script src="js/game.js"></script>
     <script src="js/ui.js"></script>

@@ -19,6 +19,16 @@ function initializeGame() {
     // Initialize UI
     window.UI.init();
 
+    // Initialize language and apply translations
+    const currentLang = window.i18n.getLanguage();
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.lang === currentLang) {
+            btn.classList.add('active');
+        }
+    });
+    window.UI.updateTranslations();
+
     // Initialize game engine
     // Game is initialized when player clicks "Start Game"
 
@@ -44,14 +54,15 @@ function checkForSavedGame() {
 
         // Show notification
         const loadBtn = document.createElement('button');
-        loadBtn.textContent = 'Continue Saved Game';
+        loadBtn.setAttribute('data-i18n', 'continueGame');
+        loadBtn.textContent = window.i18n.t('continueGame');
         loadBtn.className = 'btn-large btn-primary';
         loadBtn.style.marginTop = '20px';
         loadBtn.onclick = function() {
             window.UI.showMainGameScreen();
             window.UI.render();
             window.UI.updateEventLog();
-            window.UI.showNotification('Game loaded!', 'success');
+            window.UI.showNotification(window.i18n.t('gameLoaded'), 'success');
         };
 
         // Add to welcome screen

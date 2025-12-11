@@ -52,6 +52,14 @@ class UIController {
 
     // Setup event listeners
     setupEventListeners() {
+        // Language switcher
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const lang = e.target.dataset.lang;
+                this.switchLanguage(lang);
+            });
+        });
+
         // Start game button
         const startBtn = document.getElementById('btn-start-game');
         if (startBtn) {
@@ -80,6 +88,51 @@ class UIController {
                 this.showNPCInfo(npcId);
             });
         });
+    }
+
+    // Switch language
+    switchLanguage(lang) {
+        window.i18n.setLanguage(lang);
+
+        // Update active button
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.getElementById(`lang-${lang}`).classList.add('active');
+
+        // Update all translations
+        this.updateTranslations();
+
+        this.showNotification(window.i18n.t('language') + ': ' + window.i18n.t(lang === 'en' ? 'english' : 'russian'), 'info');
+    }
+
+    // Update all translations in the page
+    updateTranslations() {
+        // Update all elements with data-i18n attribute
+        document.querySelectorAll('[data-i18n]').forEach(elem => {
+            const key = elem.getAttribute('data-i18n');
+            elem.textContent = window.i18n.t(key);
+        });
+
+        // Update elements with data-i18n-template (with parameters)
+        document.querySelectorAll('[data-i18n-template]').forEach(elem => {
+            const key = elem.getAttribute('data-i18n-template');
+            const company = elem.getAttribute('data-company') || 'Paramount Skydance';
+            const translation = window.i18n.t(key, { company: company });
+
+            // Update the span content while preserving the <strong> tag
+            const welcomeCompany = document.getElementById('welcome-company');
+            if (welcomeCompany) {
+                const parts = translation.split(company);
+                elem.innerHTML = parts[0] + '<strong id="welcome-company">' + company + '</strong>' + (parts[1] || '');
+            }
+        });
+
+        // Re-render if game is active
+        if (window.Game && window.Game.state.isGameActive) {
+            this.render();
+            this.updateEventLog();
+        }
     }
 
     // Start game
@@ -123,7 +176,7 @@ class UIController {
         this.elements.currentDate.textContent = dateStr;
 
         const daysLeft = GAME_DATA.config.deadline_day - state.currentDay;
-        this.elements.daysRemaining.innerHTML = `Days to deadline: <strong>${daysLeft}</strong>`;
+        this.elements.daysRemaining.innerHTML = `<span data-i18n="daysToDeadline">${window.i18n.t('daysToDeadline')}</span>: <strong>${daysLeft}</strong>`;
 
         // Update NPCs
         this.updateNPCs(state);
@@ -146,20 +199,26 @@ class UIController {
                 const moodElem = elem.querySelector('.npc-mood');
                 if (moodElem) {
                     let emoji = '😐';
-                    if (relationship >= 80) emoji = '😊';
-                    else if (relationship >= 60) emoji = '🙂';
-                    else if (relationship >= 40) emoji = '😐';
-                    else if (relationship >= 20) emoji = '😠';
-                    else emoji = '😡';
+                    let moodKey = 'neutral';
 
-                    let mood = 'Neutral';
-                    if (relationship >= 80) mood = 'Very Positive';
-                    else if (relationship >= 60) mood = 'Positive';
-                    else if (relationship >= 40) mood = 'Neutral';
-                    else if (relationship >= 20) mood = 'Negative';
-                    else mood = 'Very Negative';
+                    if (relationship >= 80) {
+                        emoji = '😊';
+                        moodKey = 'veryPositive';
+                    } else if (relationship >= 60) {
+                        emoji = '🙂';
+                        moodKey = 'positive';
+                    } else if (relationship >= 40) {
+                        emoji = '😐';
+                        moodKey = 'neutral';
+                    } else if (relationship >= 20) {
+                        emoji = '😠';
+                        moodKey = 'negative';
+                    } else {
+                        emoji = '😡';
+                        moodKey = 'veryNegative';
+                    }
 
-                    moodElem.textContent = `${emoji} ${mood}`;
+                    moodElem.innerHTML = `${emoji} <span data-i18n="${moodKey}">${window.i18n.t(moodKey)}</span>`;
                 }
             }
         });
@@ -179,7 +238,7 @@ class UIController {
             const eventDiv = document.createElement('div');
             eventDiv.className = `event-item ${event.type}`;
             eventDiv.innerHTML = `
-                <span class="event-time">Day ${event.day}</span>
+                <span class="event-time"><span data-i18n="day">${window.i18n.t('day')}</span> ${event.day}</span>
                 <span class="event-text">${event.text}</span>
             `;
             eventList.appendChild(eventDiv);
@@ -188,16 +247,17 @@ class UIController {
 
     // Show main game screen
     showMainGameScreen() {
+        const currentDay = window.Game.getState().currentDay;
         this.elements.mainDisplay.innerHTML = `
-            <h2>Day ${window.Game.getState().currentDay}</h2>
-            <p>What would you like to do today?</p>
+            <h2 data-i18n-template="dayTitle">${window.i18n.t('dayTitle', {day: currentDay})}</h2>
+            <p data-i18n="whatToDo">${window.i18n.t('whatToDo')}</p>
             <div class="action-guide">
-                <h3>Available Actions:</h3>
+                <h3 data-i18n="availableActions">${window.i18n.t('availableActions')}</h3>
                 <ul>
-                    <li><strong>Negotiate</strong> - Meet with key decision makers</li>
-                    <li><strong>Finance</strong> - Secure funding and manage resources</li>
-                    <li><strong>Politics</strong> - Lobby regulators and build influence</li>
-                    <li><strong>Shareholders</strong> - Win over institutional investors</li>
+                    <li><strong data-i18n="negotiate">${window.i18n.t('negotiate')}</strong> - <span data-i18n="actionNegotiate">${window.i18n.t('actionNegotiate')}</span></li>
+                    <li><strong data-i18n="finance">${window.i18n.t('finance')}</strong> - <span data-i18n="actionFinance">${window.i18n.t('actionFinance')}</span></li>
+                    <li><strong data-i18n="politics">${window.i18n.t('politics')}</strong> - <span data-i18n="actionPolitics">${window.i18n.t('actionPolitics')}</span></li>
+                    <li><strong data-i18n="shareholders">${window.i18n.t('shareholders')}</strong> - <span data-i18n="actionShareholders">${window.i18n.t('actionShareholders')}</span></li>
                 </ul>
             </div>
         `;
