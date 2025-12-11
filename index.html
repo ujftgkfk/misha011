@@ -14,6 +14,7 @@
         <header class="game-header">
             <h1 data-i18n="gameTitle">MEDIA MOGUL: The Warner Bros. War</h1>
             <div class="header-controls">
+                <button class="btn-secondary" id="btn-menu" title="Menu">☰</button>
                 <div class="language-switcher">
                     <button class="lang-btn" id="lang-en" data-lang="en">EN</button>
                     <button class="lang-btn active" id="lang-ru" data-lang="ru">RU</button>
@@ -211,9 +212,36 @@
         <p>Loading...</p>
     </div>
 
+    <!-- Game Menu -->
+    <div id="game-menu" class="game-menu hidden">
+        <div class="menu-item" id="menu-achievements">
+            <span class="menu-item-icon">🏆</span>
+            <span data-i18n="achievements">Achievements</span>
+        </div>
+        <div class="menu-item" id="menu-statistics">
+            <span class="menu-item-icon">📊</span>
+            <span data-i18n="statistics">Statistics</span>
+        </div>
+        <div class="menu-item" id="menu-help">
+            <span class="menu-item-icon">❓</span>
+            <span data-i18n="help">Help</span>
+        </div>
+        <div class="menu-item" id="menu-settings">
+            <span class="menu-item-icon">⚙️</span>
+            <span data-i18n="settings">Settings</span>
+        </div>
+        <div class="menu-item" id="menu-save">
+            <span class="menu-item-icon">💾</span>
+            <span data-i18n="saveGame">Save Game</span>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="js/i18n.js"></script>
     <script src="js/data.js"></script>
+    <script src="js/financing.js"></script>
+    <script src="js/achievements.js"></script>
+    <script src="js/statistics.js"></script>
     <script src="js/game.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/events.js"></script>

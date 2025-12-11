@@ -448,3 +448,661 @@
 .mb-lg {
     margin-bottom: var(--spacing-lg);
 }
+
+/* Achievement System */
+.achievement-unlock {
+    position: fixed;
+    top: 100px;
+    right: -400px;
+    width: 350px;
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, var(--bg-medium), var(--bg-light));
+    border: 2px solid var(--wbd-gold);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(184, 134, 11, 0.3);
+    z-index: 2000;
+    transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.achievement-unlock.show {
+    right: 20px;
+}
+
+.achievement-content {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.achievement-icon {
+    font-size: 48px;
+    flex-shrink: 0;
+}
+
+.achievement-info {
+    flex: 1;
+}
+
+.achievement-rarity {
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.achievement-unlock.common .achievement-rarity {
+    color: #9ca3af;
+}
+
+.achievement-unlock.rare .achievement-rarity {
+    color: #3b82f6;
+}
+
+.achievement-unlock.epic .achievement-rarity {
+    color: #a855f7;
+}
+
+.achievement-unlock.legendary .achievement-rarity {
+    color: #f59e0b;
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+.achievement-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+}
+
+.achievement-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.achievement-points {
+    font-size: 12px;
+    color: var(--wbd-gold);
+    font-weight: bold;
+}
+
+/* Achievements Panel */
+.achievements-panel {
+    padding: var(--spacing-xl);
+}
+
+.achievements-header {
+    margin-bottom: var(--spacing-xl);
+}
+
+.achievements-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.achievements-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.rarity-header {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 2px solid;
+    margin-top: var(--spacing-lg);
+}
+
+.rarity-header.common {
+    color: #9ca3af;
+    border-color: #9ca3af;
+}
+
+.rarity-header.rare {
+    color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.rarity-header.epic {
+    color: #a855f7;
+    border-color: #a855f7;
+}
+
+.rarity-header.legendary {
+    color: #f59e0b;
+    border-color: #f59e0b;
+}
+
+.achievement-item {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    background: var(--bg-light);
+    border-radius: 8px;
+    border-left: 4px solid;
+    transition: all 0.2s ease;
+}
+
+.achievement-item.locked {
+    opacity: 0.5;
+    filter: grayscale(100%);
+}
+
+.achievement-item.unlocked {
+    border-left-color: var(--success);
+}
+
+.achievement-item.unlocked:hover {
+    background: var(--bg-dark);
+    transform: translateX(4px);
+}
+
+.achievement-item .achievement-icon {
+    font-size: 40px;
+}
+
+.achievement-details {
+    flex: 1;
+}
+
+/* Financing System */
+.financing-proposal {
+    padding: var(--spacing-lg);
+}
+
+.deal-summary {
+    background: var(--bg-light);
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    margin: var(--spacing-lg) 0;
+}
+
+.deal-line {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.deal-line.total {
+    border-bottom: none;
+    border-top: 2px solid var(--wbd-gold);
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-md);
+    font-size: 18px;
+}
+
+.deal-line strong {
+    color: var(--wbd-gold);
+}
+
+.financing-sources {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-lg) 0;
+}
+
+.source-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: var(--bg-light);
+    border-radius: 6px;
+}
+
+.source-item.cash {
+    border-left: 4px solid var(--success);
+}
+
+.source-item.debt {
+    border-left: 4px solid var(--warning);
+}
+
+.source-amount {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.source-percent {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.financing-warning {
+    padding: var(--spacing-md);
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid var(--warning);
+    border-radius: 6px;
+    color: var(--warning);
+    margin-top: var(--spacing-lg);
+}
+
+.financing-success {
+    padding: var(--spacing-md);
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid var(--success);
+    border-radius: 6px;
+    color: var(--success);
+    margin-top: var(--spacing-lg);
+}
+
+.investor-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.investor-card {
+    padding: var(--spacing-lg);
+    background: var(--bg-light);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.investor-card:hover {
+    border-color: var(--wbd-gold);
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(184, 134, 11, 0.2);
+}
+
+.investor-card.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.investor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.investor-icon-large {
+    font-size: 32px;
+}
+
+.investor-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.investor-type {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.investor-available {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--success);
+    margin: var(--spacing-sm) 0;
+}
+
+.investor-terms {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.investor-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.investor-input {
+    flex: 1;
+    padding: var(--spacing-sm);
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-primary);
+}
+
+/* Statistics Dashboard */
+.statistics-dashboard {
+    padding: var(--spacing-xl);
+}
+
+.stat-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+.stat-card {
+    padding: var(--spacing-lg);
+    background: var(--bg-light);
+    border-radius: 8px;
+    border-left: 4px solid;
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.stat-card.cash {
+    border-left-color: var(--success);
+}
+
+.stat-card.influence {
+    border-left-color: var(--info);
+}
+
+.stat-card.reputation {
+    border-left-color: var(--wbd-gold);
+}
+
+.stat-card.bid {
+    border-left-color: var(--warning);
+}
+
+.stat-icon {
+    font-size: 36px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.stat-change {
+    font-size: 14px;
+    margin-top: var(--spacing-xs);
+}
+
+.stat-change.positive {
+    color: var(--success);
+}
+
+.stat-change.negative {
+    color: var(--danger);
+}
+
+.stat-change.neutral {
+    color: var(--text-secondary);
+}
+
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    margin: var(--spacing-xl) 0;
+}
+
+.chart-panel {
+    background: var(--bg-light);
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.simple-chart {
+    height: 200px;
+    position: relative;
+    background: var(--bg-dark);
+    border-radius: 6px;
+    margin-top: var(--spacing-md);
+}
+
+.chart-line {
+    position: relative;
+    height: 100%;
+}
+
+.chart-points {
+    position: relative;
+    height: 100%;
+}
+
+.chart-point {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--wbd-gold);
+    border-radius: 50%;
+    transform: translate(-50%, 50%);
+    box-shadow: 0 0 8px rgba(184, 134, 11, 0.5);
+}
+
+.relationships-chart {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.relationship-bar-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.npc-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    min-width: 150px;
+}
+
+.npc-portrait-small {
+    width: 30px;
+    height: 30px;
+    background: var(--bg-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.npc-name-small {
+    font-size: 13px;
+}
+
+.relationship-bar-container {
+    flex: 1;
+    height: 20px;
+    background: var(--bg-dark);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.relationship-bar-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.relationship-value-small {
+    min-width: 50px;
+    text-align: right;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.detailed-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.stat-item-detailed {
+    padding: var(--spacing-md);
+    background: var(--bg-light);
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-label-detailed {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.stat-value-detailed {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+/* Tutorial/Help */
+.tutorial-panel {
+    padding: var(--spacing-xl);
+}
+
+.tutorial-step {
+    padding: var(--spacing-lg);
+    background: var(--bg-light);
+    border-radius: 8px;
+    margin-bottom: var(--spacing-md);
+    border-left: 4px solid var(--info);
+}
+
+.tutorial-step h4 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--wbd-gold);
+}
+
+.tutorial-step p {
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+/* Settings Panel */
+.settings-panel {
+    padding: var(--spacing-xl);
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    background: var(--bg-light);
+    border-radius: 6px;
+    margin-bottom: var(--spacing-md);
+}
+
+.setting-label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.setting-name {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.setting-description {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.toggle-switch {
+    position: relative;
+    width: 50px;
+    height: 26px;
+    background: var(--bg-dark);
+    border-radius: 13px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.toggle-switch.active {
+    background: var(--success);
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: left 0.3s;
+}
+
+.toggle-switch.active .toggle-slider {
+    left: 27px;
+}
+
+/* Menu System */
+.game-menu {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background: var(--bg-medium);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    min-width: 200px;
+}
+
+.game-menu.hidden {
+    display: none;
+}
+
+.menu-item {
+    padding: var(--spacing-md) var(--spacing-lg);
+    cursor: pointer;
+    transition: background 0.2s;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+.menu-item:hover {
+    background: var(--bg-light);
+}
+
+.menu-item-icon {
+    margin-right: var(--spacing-sm);
+}
+
+/* Animations */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.animate-slide-in {
+    animation: slideInRight 0.3s ease;
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}

@@ -73,6 +73,32 @@ class UIController {
         document.getElementById('btn-shareholders')?.addEventListener('click', () => this.showShareholdersPanel());
         document.getElementById('btn-next-turn')?.addEventListener('click', () => this.nextTurn());
 
+        // Menu button
+        document.getElementById('btn-menu')?.addEventListener('click', () => this.toggleMenu());
+
+        // Menu items
+        document.getElementById('menu-achievements')?.addEventListener('click', () => {
+            this.hideMenu();
+            this.showAchievementsPanel();
+        });
+        document.getElementById('menu-statistics')?.addEventListener('click', () => {
+            this.hideMenu();
+            this.showStatisticsPanel();
+        });
+        document.getElementById('menu-help')?.addEventListener('click', () => {
+            this.hideMenu();
+            this.showHelpPanel();
+        });
+        document.getElementById('menu-settings')?.addEventListener('click', () => {
+            this.hideMenu();
+            this.showSettingsPanel();
+        });
+        document.getElementById('menu-save')?.addEventListener('click', () => {
+            this.hideMenu();
+            window.Game.saveGame();
+            this.showNotification(window.i18n.t('gameSaved'), 'success');
+        });
+
         // Modal close
         this.elements.modalClose?.addEventListener('click', () => this.hideModal());
         this.elements.modalOverlay?.addEventListener('click', (e) => {
@@ -146,8 +172,35 @@ class UIController {
     // Next turn
     nextTurn() {
         window.Game.nextDay();
+
+        // Check for new achievements
+        if (window.Achievements) {
+            window.Achievements.checkAchievements(window.Game.getState());
+        }
+
+        // Record statistics
+        if (window.Statistics) {
+            window.Statistics.recordState(window.Game.getState());
+        }
+
         this.render();
         this.updateEventLog();
+    }
+
+    // Toggle menu
+    toggleMenu() {
+        const menu = document.getElementById('game-menu');
+        if (menu) {
+            menu.classList.toggle('hidden');
+        }
+    }
+
+    // Hide menu
+    hideMenu() {
+        const menu = document.getElementById('game-menu');
+        if (menu) {
+            menu.classList.add('hidden');
+        }
     }
 
     // Main render function
@@ -321,38 +374,42 @@ class UIController {
     // Show finance panel
     showFinancePanel() {
         const state = window.Game.getState();
+        const lang = window.i18n.getLanguage();
 
         let content = `
-            <h3>Financial Resources</h3>
+            <h3 data-i18n="financialResources">${window.i18n.t('financialResources')}</h3>
             <div class="finance-summary">
                 <div class="finance-item">
-                    <span>Available Cash:</span>
+                    <span data-i18n="availableCash">${window.i18n.t('availableCash')}</span>
                     <strong>$${state.cash.toFixed(1)}B</strong>
                 </div>
                 <div class="finance-item">
-                    <span>Debt Capacity:</span>
+                    <span data-i18n="debtCapacity">${window.i18n.t('debtCapacity')}</span>
                     <strong>$${state.debtCapacity.toFixed(1)}B</strong>
                 </div>
                 <div class="finance-item">
-                    <span>Total Capacity:</span>
+                    <span data-i18n="totalCapacity">${window.i18n.t('totalCapacity')}</span>
                     <strong>$${(state.cash + state.debtCapacity).toFixed(1)}B</strong>
                 </div>
             </div>
 
-            <h3>Raise Your Bid</h3>
+            <h3 data-i18n="raiseYourBid">${window.i18n.t('raiseYourBid')}</h3>
             <div class="bid-controls">
-                <p>Current bid: <strong>$${state.currentBid.toFixed(2)}/share</strong></p>
-                <p>Total deal value: <strong>$${(state.currentBid * GAME_DATA.config.wbd_shares).toFixed(1)}B</strong></p>
+                <p><span data-i18n="currentBid">${window.i18n.t('currentBid')}</span> <strong>$${state.currentBid.toFixed(2)}/share</strong></p>
+                <p><span data-i18n="totalDealValue">${window.i18n.t('totalDealValue')}</span> <strong>$${(state.currentBid * GAME_DATA.config.wbd_shares).toFixed(1)}B</strong></p>
                 <div class="bid-input">
-                    <label>New bid per share:</label>
+                    <label data-i18n="newBidPerShare">${window.i18n.t('newBidPerShare')}</label>
                     <input type="number" id="new-bid-input" min="${state.currentBid + 0.01}" step="0.25" value="${(state.currentBid + 1).toFixed(2)}">
-                    <button class="btn-primary" onclick="window.UI.raiseBid()">Raise Bid</button>
+                    <button class="btn-primary" onclick="window.UI.raiseBid()" data-i18n="raiseBid">${window.i18n.t('raiseBid')}</button>
                 </div>
             </div>
-
-            <h3>Financing Sources</h3>
-            <p class="text-secondary">Coming soon: Detailed financing options</p>
         `;
+
+        // Add financing sources if system is available
+        if (window.Financing) {
+            content += `<h3 data-i18n="financingSources">${window.i18n.t('financingSources')}</h3>`;
+            content += window.Financing.generateInvestorPanel(state, lang);
+        }
 
         this.elements.mainDisplay.innerHTML = content;
     }
@@ -603,6 +660,138 @@ class UIController {
         const footer = '<button class="btn-primary" onclick="window.UI.hideModal(); window.UI.showFinancePanel()">Make Your Bid</button>';
 
         this.showModal(`Bidding Round ${round.round}`, content, footer);
+    }
+
+    // Show achievements panel
+    showAchievementsPanel() {
+        if (!window.Achievements) {
+            this.showNotification('Achievements system not loaded', 'error');
+            return;
+        }
+
+        const state = window.Game.getState();
+        const lang = window.i18n.getLanguage();
+        const content = window.Achievements.generateAchievementsPanel(state, lang);
+
+        this.elements.mainDisplay.innerHTML = content;
+    }
+
+    // Show statistics panel
+    showStatisticsPanel() {
+        if (!window.Statistics) {
+            this.showNotification('Statistics system not loaded', 'error');
+            return;
+        }
+
+        const state = window.Game.getState();
+        const lang = window.i18n.getLanguage();
+        const content = window.Statistics.generateDashboard(state, lang);
+
+        this.elements.mainDisplay.innerHTML = content;
+    }
+
+    // Show help panel
+    showHelpPanel() {
+        const lang = window.i18n.getLanguage();
+
+        const content = `
+            <div class="help-panel">
+                <h3>${lang === 'ru' ? '📖 Справка' : '📖 Help'}</h3>
+
+                <div class="help-section">
+                    <h4>${lang === 'ru' ? '🎯 Цель игры' : '🎯 Game Objective'}</h4>
+                    <p>${lang === 'ru'
+                        ? 'Выиграйте торги на приобретение Warner Bros. Discovery, предложив не менее $35 за акцию и получив одобрение ключевых игроков.'
+                        : 'Win the bidding war for Warner Bros. Discovery by offering at least $35/share and gaining approval from key stakeholders.'
+                    }</p>
+                </div>
+
+                <div class="help-section">
+                    <h4>${lang === 'ru' ? '💰 Ресурсы' : '💰 Resources'}</h4>
+                    <ul>
+                        <li><strong>${lang === 'ru' ? 'Наличные' : 'Cash'}</strong> - ${lang === 'ru' ? 'Используйте для повышения ставок' : 'Use to raise your bid'}</li>
+                        <li><strong>${lang === 'ru' ? 'Политическое влияние' : 'Political Influence'}</strong> - ${lang === 'ru' ? 'Нужно для лоббирования регуляторов' : 'Required for lobbying regulators'}</li>
+                        <li><strong>${lang === 'ru' ? 'Репутация' : 'Reputation'}</strong> - ${lang === 'ru' ? 'Влияет на поддержку акционеров' : 'Affects shareholder support'}</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h4>${lang === 'ru' ? '🎮 Действия' : '🎮 Actions'}</h4>
+                    <ul>
+                        <li><strong>${lang === 'ru' ? 'Переговоры' : 'Negotiate'}</strong> - ${lang === 'ru' ? 'Встречайтесь с ключевыми фигурами' : 'Meet with key decision makers'}</li>
+                        <li><strong>${lang === 'ru' ? 'Финансы' : 'Finance'}</strong> - ${lang === 'ru' ? 'Управляйте финансированием и ставками' : 'Manage financing and bids'}</li>
+                        <li><strong>${lang === 'ru' ? 'Политика' : 'Politics'}</strong> - ${lang === 'ru' ? 'Лоббируйте регуляторов' : 'Lobby regulators'}</li>
+                        <li><strong>${lang === 'ru' ? 'Акционеры' : 'Shareholders'}</strong> - ${lang === 'ru' ? 'Завоевывайте поддержку инвесторов' : 'Win investor support'}</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h4>${lang === 'ru' ? '⌨️ Горячие клавиши' : '⌨️ Keyboard Shortcuts'}</h4>
+                    <ul>
+                        <li><kbd>Space</kbd>/<kbd>Enter</kbd> - ${lang === 'ru' ? 'Следующий день' : 'Next day'}</li>
+                        <li><kbd>1</kbd>-<kbd>4</kbd> - ${lang === 'ru' ? 'Быстрые действия' : 'Quick actions'}</li>
+                        <li><kbd>Esc</kbd> - ${lang === 'ru' ? 'Закрыть окно' : 'Close modal'}</li>
+                        <li><kbd>Ctrl+S</kbd> - ${lang === 'ru' ? 'Сохранить игру' : 'Save game'}</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h4>${lang === 'ru' ? '🏆 Условия победы' : '🏆 Win Conditions'}</h4>
+                    <ul>
+                        <li>${lang === 'ru' ? 'Ставка ≥ $35/акция' : 'Bid ≥ $35/share'}</li>
+                        <li>${lang === 'ru' ? 'Отношения с Заславом ≥ 70/100' : 'Zaslav relationship ≥ 70/100'}</li>
+                        <li>${lang === 'ru' ? 'Поддержка акционеров > 50%' : 'Shareholder support > 50%'}</li>
+                        <li>${lang === 'ru' ? 'Антимонопольное давление < 50' : 'Antitrust pressure < 50'}</li>
+                    </ul>
+                </div>
+            </div>
+        `;
+
+        this.elements.mainDisplay.innerHTML = content;
+    }
+
+    // Show settings panel
+    showSettingsPanel() {
+        const lang = window.i18n.getLanguage();
+
+        const content = `
+            <div class="settings-panel">
+                <h3>${lang === 'ru' ? '⚙️ Настройки' : '⚙️ Settings'}</h3>
+
+                <div class="setting-item">
+                    <h4 data-i18n="language">${window.i18n.t('language')}</h4>
+                    <div class="language-switcher">
+                        <button class="lang-btn ${lang === 'en' ? 'active' : ''}" onclick="window.UI.switchLanguage('en')">EN</button>
+                        <button class="lang-btn ${lang === 'ru' ? 'active' : ''}" onclick="window.UI.switchLanguage('ru')">RU</button>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <h4>${lang === 'ru' ? 'Сохранения' : 'Save Game'}</h4>
+                    <button class="btn-primary" onclick="window.Game.saveGame(); window.UI.showNotification('${lang === 'ru' ? 'Игра сохранена!' : 'Game saved!'}', 'success')">
+                        💾 ${lang === 'ru' ? 'Сохранить сейчас' : 'Save Now'}
+                    </button>
+                    <button class="btn-secondary" onclick="if(confirm('${lang === 'ru' ? 'Удалить сохранение?' : 'Delete save?'}')) { localStorage.removeItem(window.Game.saveKey); location.reload(); }">
+                        🗑️ ${lang === 'ru' ? 'Удалить сохранение' : 'Delete Save'}
+                    </button>
+                </div>
+
+                <div class="setting-item">
+                    <h4>${lang === 'ru' ? 'О игре' : 'About'}</h4>
+                    <p><strong>Media Mogul: The Warner Bros. War</strong></p>
+                    <p>Version: ${window.GAME_VERSION || '1.0.0'}</p>
+                    <p>Build: ${window.GAME_BUILD || 'Alpha'}</p>
+                    <p style="margin-top: 10px; color: var(--text-secondary);">
+                        ${lang === 'ru'
+                            ? 'Это вымышленная игра, основанная на публичных новостях. Все персонажи и события используются исключительно в развлекательных целях.'
+                            : 'This is a fictional game based on public news. All characters and events are used for entertainment purposes only.'
+                        }
+                    </p>
+                </div>
+            </div>
+        `;
+
+        this.elements.mainDisplay.innerHTML = content;
     }
 }
 

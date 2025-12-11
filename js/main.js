@@ -38,6 +38,24 @@ function initializeGame() {
     // Initialize negotiations system
     // Already initialized in negotiations.js
 
+    // Initialize financing system
+    if (typeof FinancingSystem !== 'undefined') {
+        window.Financing = new FinancingSystem();
+        console.log('✅ Financing system initialized');
+    }
+
+    // Initialize achievements system
+    if (typeof AchievementsSystem !== 'undefined') {
+        window.Achievements = new AchievementsSystem();
+        console.log('✅ Achievements system initialized');
+    }
+
+    // Initialize statistics system
+    if (typeof StatisticsSystem !== 'undefined') {
+        window.Statistics = new StatisticsSystem();
+        console.log('✅ Statistics system initialized');
+    }
+
     // Setup keyboard shortcuts
     setupKeyboardShortcuts();
 
